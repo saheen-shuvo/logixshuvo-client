@@ -1,7 +1,15 @@
+import logo from "../assets/image/logo.svg";
 const Footer = () => {
   return (
     <div>
-      <footer className="footer footer-center bg-[#023E8A] p-10 flex flex-col text-white">
+      <footer className="footer footer-center bg-[#023E8A] p-4 flex flex-col text-white">
+        <div>
+          <img className="w-16" src={logo} alt="" />
+          <p className="text-sm md:text-xl font-bold  text-[white] flex items-center">
+            Logi<span className="text-[#ff6a00]">X</span>Shuvo
+          </p>
+          <p>Send your parcel to its destination safely and efficiently with us.</p>
+        </div>
         <nav className="grid grid-flow-col gap-4">
           <a className="link link-hover">About us</a>
           <a className="link link-hover">Contact</a>
@@ -47,11 +55,12 @@ const Footer = () => {
         </nav>
         <aside>
           <p>
-            Copyright © {new Date().getFullYear()} - All right reserved by LogiXShuvo Limited.
+            Copyright © {new Date().getFullYear()} - All right reserved by
+            LogiXShuvo Limited.
           </p>
         </aside>
       </footer>
-      <div className="bg-gray-800 text-gray-800">.</div>
+      <div className="bg-[#0077B6] text-gray-800">.</div>
     </div>
   );
 };
