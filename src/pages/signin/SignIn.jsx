@@ -11,6 +11,7 @@ import {
 } from "react-simple-captcha";
 // import authImg from "../../assets/others/authentication2.png";
 import SocialLogin from "../../shared/SocialLogin";
+import authImg from '../../assets/image/authentication.gif'
 
 const SignIn = () => {
   const captchaRef = useRef(null);
@@ -62,7 +63,7 @@ const SignIn = () => {
     <div className="auth-bg hero min-h-screen flex flex-col lg:flex-row-reverse items-center justify-center p-4 lg:gap-28">
       {/* SIDE IMAGE SECTION */}
       <div className="w-full lg:w-[30%] flex justify-center mt-14 lg:mt-0 mb-6 lg:mb-0">
-        <img src={''} alt="" />
+        <img className="rounded-full border-8 border-dotted" src={authImg} alt="" />
       </div>
 
       {/* Form Section */}
@@ -100,7 +101,7 @@ const SignIn = () => {
                   to="/register"
                 >
                   Click here
-                </Link>
+                </Link> to register.
               </p>
             </label>
           </div>

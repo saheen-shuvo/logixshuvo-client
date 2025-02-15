@@ -8,7 +8,7 @@ import AuthContext from "../../context/AuthContext/AuthContext";
 // import authImg from "../../assets/others/authentication2.png"
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../shared/SocialLogin";
-
+import authImg from "../../assets/image/authentication.gif";
 
 const Register = () => {
   // const axiosPublic = useAxiosPublic();
@@ -73,11 +73,10 @@ const Register = () => {
       // axiosPublic.post('/users', userInfo)
       // .then(res => {
       //   if(res.data.insertedId){
-          form.reset();
-          navigate("/");
+      form.reset();
+      navigate("/");
       //   }
       // })
-
     } catch (error) {
       console.error("Error creating account:", error.message);
       toast.error(error.message);
@@ -174,7 +173,11 @@ const Register = () => {
         </p>
       </div>
       <div className="w-full lg:w-[30%] flex justify-center mt-16 lg:mt-0">
-      <img src={''} alt="" />
+        <img
+          className="rounded-full border-8 border-dotted"
+          src={authImg}
+          alt=""
+        />
       </div>
     </div>
   );

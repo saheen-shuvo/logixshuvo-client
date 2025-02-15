@@ -1,12 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import {  NavLink } from "react-router-dom";
-import logo from '../assets/image/logo.svg'
+import { NavLink } from "react-router-dom";
+import logo from "../assets/image/logo.svg";
 import { RiNotification3Line } from "react-icons/ri";
 import AuthContext from "../context/AuthContext/AuthContext";
 import { MdLogout } from "react-icons/md";
-
-
-
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
@@ -21,13 +18,16 @@ const Navbar = () => {
     document.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
 
-  const links =
+  const links = (
     <>
       <li className="font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
       <li className="font-semibold flex items-center">
-        <NavLink to="/menu"><RiNotification3Line />Notifications</NavLink>
+        <NavLink to="/menu">
+          <RiNotification3Line />
+          Notifications
+        </NavLink>
       </li>
       <li className="font-semibold flex items-center">
         <NavLink to="/signin">Sign in</NavLink>
@@ -36,16 +36,17 @@ const Navbar = () => {
         <NavLink to="/register">Register</NavLink>
       </li>
     </>
+  );
 
-      const handleSignOut = () => {
-        signOutUser()
-          .then(() => {
-            console.log("Successfully signed out");
-          })
-          .catch((error) => {
-            console.log("Signout error", error);
-          });
-      };
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        console.log("Successfully signed out");
+      })
+      .catch((error) => {
+        console.log("Signout error", error);
+      });
+  };
 
   const handleToggle = (e) => {
     if (e.target.checked) {
@@ -56,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar fixed z-10 bg-opacity-30  bg-[#0077B6] text-[#FFFFFF]">
+    <div className="navbar fixed z-10 bg-opacity-30  bg-[#0077B6]">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -84,7 +85,9 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-1">
           <p className="text-xl font-bold text-green-800"></p>
-          <p className="text-sm md:text-xl font-bold  text-[white] flex items-center"> <img className="w-7" src={logo} alt="" />
+          <p className="text-sm md:text-xl font-bold  text-[white] flex items-center">
+            {" "}
+            <img className="w-7" src={logo} alt="" />
             Logi<span className="text-[#ff6a00]">X</span>Shuvo
           </p>
         </div>
@@ -93,37 +96,42 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-      {user ? (
-          <>
-            <div className="relative flex items-center gap-2 md:gap-6">
-              <div className="relative group">
-                <img
-                  className={
-                    user.photoURL
-                      ? "w-10 h-10 object-cover rounded-full"
-                      : "hidden"
-                  }
-                  src={user?.photoURL}
-                  alt=""
-                />
-                <div className="absolute bottom-[-35px] left-1/2 transform -translate-x-1/2 hidden p-2 group-hover:block text-black text-[9px] rounded-md">
-                  {user?.displayName || "Unknown User"}
-                </div>
-              </div>
-              <button onClick={handleSignOut} className="btn btn-primary">
-                <MdLogout />
-                <p>Log out</p>
-              </button>
+        {user ? (
+          <div className="dropdown dropdown-end px-2">
+            <div tabIndex={0} role="button" className="">
+              <img
+                className="w-10 h-10 object-cover rounded-full"
+                src={user.photoURL || "default-avatar.png"}
+                alt="User Avatar"
+              />
             </div>
-          </>
+            <div
+              tabIndex={0}
+              className="dropdown-content  bg-base-100 z-[1] p-2 shadow rounded-lg"
+            >
+              <div className="">
+                <h3 className="font-semibold text-center">
+                  {user.displayName || "Unknown User"}
+                </h3>
+                <p>
+                <NavLink className="p-2 mt-2 font-semibold" to="/dashboard">
+                  Dashboard
+                </NavLink>
+                </p>
+                <button
+                  onClick={handleSignOut}
+                  className="btn btn-primary flex items-center gap-2 w-28 my-2"
+                >
+                  <MdLogout /> <span>Log out</span>
+                </button>
+              </div>
+            </div>
+          </div>
         ) : (
           <>
-            <p className="btn btn-ghost">
-              <NavLink to="/register">Register</NavLink>
-            </p>
-            <p className="btn btn-ghost">
-              <NavLink to="/signin">Sign in</NavLink>
-            </p>
+            <NavLink className="btn btn-ghost" to="/signin">
+              Sign in
+            </NavLink>
           </>
         )}
       </div>
