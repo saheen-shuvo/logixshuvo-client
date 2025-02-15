@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {  NavLink } from "react-router-dom";
 import logo from '../assets/image/logo.svg'
 import { RiNotification3Line } from "react-icons/ri";
+import AuthContext from "../context/AuthContext/AuthContext";
+import { MdLogout } from "react-icons/md";
+
 
 
 
 const Navbar = () => {
+  const { user, signOutUser } = useContext(AuthContext);
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
@@ -25,7 +29,23 @@ const Navbar = () => {
       <li className="font-semibold flex items-center">
         <NavLink to="/menu"><RiNotification3Line />Notifications</NavLink>
       </li>
+      <li className="font-semibold flex items-center">
+        <NavLink to="/signin">Sign in</NavLink>
+      </li>
+      <li className="font-semibold flex items-center">
+        <NavLink to="/register">Register</NavLink>
+      </li>
     </>
+
+      const handleSignOut = () => {
+        signOutUser()
+          .then(() => {
+            console.log("Successfully signed out");
+          })
+          .catch((error) => {
+            console.log("Signout error", error);
+          });
+      };
 
   const handleToggle = (e) => {
     if (e.target.checked) {
@@ -73,6 +93,39 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
+      {user ? (
+          <>
+            <div className="relative flex items-center gap-2 md:gap-6">
+              <div className="relative group">
+                <img
+                  className={
+                    user.photoURL
+                      ? "w-10 h-10 object-cover rounded-full"
+                      : "hidden"
+                  }
+                  src={user?.photoURL}
+                  alt=""
+                />
+                <div className="absolute bottom-[-35px] left-1/2 transform -translate-x-1/2 hidden p-2 group-hover:block text-black text-[9px] rounded-md">
+                  {user?.displayName || "Unknown User"}
+                </div>
+              </div>
+              <button onClick={handleSignOut} className="btn btn-primary">
+                <MdLogout />
+                <p>Log out</p>
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="btn btn-ghost">
+              <NavLink to="/register">Register</NavLink>
+            </p>
+            <p className="btn btn-ghost">
+              <NavLink to="/signin">Sign in</NavLink>
+            </p>
+          </>
+        )}
       </div>
       <label className="swap swap-rotate">
         <input
