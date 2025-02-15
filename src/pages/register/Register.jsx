@@ -5,13 +5,12 @@ import { Bounce, toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../context/AuthContext/AuthContext";
-// import authImg from "../../assets/others/authentication2.png"
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../shared/SocialLogin";
 import authImg from "../../assets/image/authentication.gif";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
-  // const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
   const { createUser, setLoading, setUser } = useContext(AuthContext);
@@ -20,6 +19,7 @@ const Register = () => {
     e.preventDefault();
 
     const form = e.target;
+    const role = form.role.value;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
@@ -68,15 +68,15 @@ const Register = () => {
 
       toast.success("Account created successfully!");
 
-      // const userInfo = { name, email };
+      const userInfo = { name, email, role };
+      console.log(userInfo);
 
-      // axiosPublic.post('/users', userInfo)
-      // .then(res => {
-      //   if(res.data.insertedId){
-      form.reset();
-      navigate("/");
-      //   }
-      // })
+      axiosPublic.post("/users", userInfo).then((res) => {
+        if (res.data.insertedId) {
+          form.reset();
+          navigate("/");
+        }
+      });
     } catch (error) {
       console.error("Error creating account:", error.message);
       toast.error(error.message);
@@ -93,6 +93,19 @@ const Register = () => {
       <div className="card w-full max-w-sm lg:w-[70%] shadow-2xl p-6 my-8 lg:my-20 bg-base-300">
         <h1 className="text-center text-2xl font-bold">Register Here!</h1>
         <form onSubmit={handleRegister} className="card-body space-y-4">
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Select User Role</span>
+            </label>
+            <select
+              name="role"
+              className="select select-bordered w-full max-w-xs"
+              defaultValue="User"
+            >
+              <option value="user">User</option>
+              <option value="deliveryman">Delivery Man</option>
+            </select>
+          </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">User Name</span>
