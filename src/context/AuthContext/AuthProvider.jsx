@@ -12,14 +12,14 @@ import {
 } from "firebase/auth";
 import auth from "../../firebase/firebase.init";
 import { toast } from "react-toastify";
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 // const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-  // const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -48,31 +48,30 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // if(currentUser){
-      //   // Get token and store client
-      //   const userInfo = {email: currentUser.email};
-      //   axiosPublic.post('/jwt', userInfo)
-      //   .then(res => {
-      //     if(res.data.token){
-      //       localStorage.setItem('access-token', res.data.token);
-      //       setLoading(false);
-      //     }
-      //   })
-      // }
-      // else{
-      //   // Do Something
-      //   localStorage.removeItem('access-token');
-      //   setLoading(false);
-      // }
+      if(currentUser){
+        // Get token and store client
+        const userInfo = {email: currentUser.email};
+        axiosPublic.post('/jwt', userInfo)
+        .then(res => {
+          if(res.data.token){
+            localStorage.setItem('access-token', res.data.token);
+            setLoading(false);
+          }
+        })
+      }
+      else{
+        // Do Something
+        localStorage.removeItem('access-token');
+        setLoading(false);
+      }
 
       console.log("State Captured for =", currentUser);
-      setLoading(false)
     });
 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,

@@ -2,8 +2,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { MdDeleteForever } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,6 +14,48 @@ const AllUsers = () => {
       return res.data;
     },
   });
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleRoleChange = (_id, role) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axiosSecure.patch(`/users/role/${_id}`, { role });
+          if (res.data.modifiedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Success!",
+              text: "Role Changed Successfully!",
+              icon: "success",
+              timer: 1500,
+            });
+          } else {
+            Swal.fire({
+              title: "No Change!",
+              text: "User already has this role.",
+              icon: "info",
+            });
+          }
+        }
+      });
+    } catch (error) {
+      console.error("Error updating role:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Failed to update role. Please try again.",
+        icon: "error",
+      });
+    }
+  };
 
   const handleDeleteUser = (user) => {
     Swal.fire({
@@ -28,7 +70,7 @@ const AllUsers = () => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/users/${user._id}`).then((res) => {
           refetch();
-          if (res.data.deleteCount > 1) {
+          if (res.data.deletedCount > 0) {
             Swal.fire({
               title: "Deleted!",
               text: "The user has been deleted.",
@@ -66,10 +108,11 @@ const AllUsers = () => {
                 <td className="font-semibold">{user.name}</td>
                 <td className="font-semibold">{user.email}</td>
                 <th>
-                  <button
-                    onClick={() =>
-                      document.getElementById("my_modal_5").showModal()
-                    }
+                <button
+                    onClick={() => {
+                      setSelectedUser(user);
+                      document.getElementById("role_modal").showModal();
+                    }}
                     className="btn btn-primary w-20 btn-xs"
                   >
                     {user.role}
@@ -88,18 +131,41 @@ const AllUsers = () => {
           </tbody>
         </table>
       </div>
-      {/* MODAL */}
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+      <dialog id="role_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-            <p className="my-2">Set This User As:</p>
-            <div className="flex flex-col gap-2">
-            <button className="btn btn-primary">Admin</button>
-            <button className="btn btn-primary">Delivery Man</button>
-            </div>
+          {selectedUser && (
+            <>
+              <p className="my-2">
+                Set <strong>{selectedUser.name}</strong> as:
+              </p>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    handleRoleChange(selectedUser._id, "admin");
+                    document.getElementById("role_modal").close();
+                  }}
+                  className="btn btn-primary"
+                >
+                  Admin
+                </button>
+                <button
+                  onClick={() => {
+                    handleRoleChange(selectedUser._id, "deliveryman");
+                    document.getElementById("role_modal").close();
+                  }}
+                  className="btn btn-primary"
+                >
+                  Delivery Man
+                </button>
+              </div>
+            </>
+          )}
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              {/* Close button */}
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
             </form>
           </div>
         </div>
