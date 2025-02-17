@@ -114,13 +114,13 @@ const Navbar = () => {
                   {user.displayName || "Unknown User"}
                 </h3>
                 <p>
-                <NavLink className="p-2 mt-2 font-semibold" to="/dashboard">
+                <NavLink className="p-2 mt-2 font-semibold btn btn-primary w-full" to="/dashboard">
                   Dashboard
                 </NavLink>
                 </p>
                 <button
                   onClick={handleSignOut}
-                  className="btn btn-primary flex items-center gap-2 w-28 my-2"
+                  className="btn btn-outline flex items-center gap-2 w-28 my-2"
                 >
                   <MdLogout /> <span>Log out</span>
                 </button>
