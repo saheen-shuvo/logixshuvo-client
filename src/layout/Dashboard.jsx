@@ -4,11 +4,10 @@ import { IoLogoDropbox } from "react-icons/io";
 import { IoStatsChart } from "react-icons/io5";
 import { PiUsersFourFill } from "react-icons/pi";
 import { NavLink, Outlet } from "react-router-dom";
-// import useAdmin from "../hooks/useAdmin";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  // const [isAdmin] = useAdmin();
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="flex">
