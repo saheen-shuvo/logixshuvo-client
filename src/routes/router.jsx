@@ -4,9 +4,10 @@ import Home from "../pages/home/Home";
 import SignIn from "../pages/signin/SignIn";
 import Register from "../pages/register/Register";
 import Dashboard from "../layout/Dashboard";
-import UserHome from "../pages/Dashboard/User/UserHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AdminRoute from "./AdminRoute";
+import AllDeliveryMan from "../pages/Dashboard/Admin/AllDeliveryMan";
+import BookParcel from "../pages/Dashboard/User/BookParcel";
 
 export const router = createBrowserRouter([
   {
@@ -33,8 +34,8 @@ export const router = createBrowserRouter([
     children: [
       // NORMAL USER ROUTES
       {
-        path: "userhome",
-        element: <UserHome></UserHome>,
+        path: "bookparcel",
+        element: <BookParcel></BookParcel>,
       },
       // ADMIN ROUTES
       {
@@ -42,6 +43,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "alldeliveryman",
+        element: (
+          <AdminRoute>
+            <AllDeliveryMan></AllDeliveryMan>
           </AdminRoute>
         ),
       },
