@@ -1,20 +1,49 @@
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AuthContext from "../../../context/AuthContext/AuthContext";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+
 const BookParcel = () => {
   const { user } = useContext(AuthContext);
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const axiosPublic = useAxiosPublic();
+  const { register, handleSubmit, setValue, watch, reset } = useForm();
   const parcelWeight = watch("weight");
+
   useEffect(() => {
     if (user) {
       setValue("name", user?.displayName || "");
       setValue("email", user?.email || "");
     }
   }, [user, setValue]);
-  const onSubmit = (data) => {
-    console.log("Submitted Data:", data);
-    alert(JSON.stringify(data, null, 2));
-  };
+
+  const onSubmit = async (data) => {
+    const bookingDate = new Date();
+    const approximateDeliveryDate = new Date();
+    approximateDeliveryDate.setDate(bookingDate.getDate() + 3);
+
+    const parcelData = {
+      ...data,
+      bookingDate: bookingDate.toISOString(),
+      approximateDeliveryDate: approximateDeliveryDate.toISOString(),
+      deliveryManId: null,
+      deliveryStatus: "pending"
+    };
+
+    const bookedParcels = await axiosPublic.post("/bookedParcels", parcelData);
+    console.log(bookedParcels.data);
+    if (bookedParcels.data.insertedId) {
+      reset();
+      Swal.fire({
+        position: "center",
+        title: `Your Parcel Booked Successfully!`,
+        showConfirmButton: false,
+        icon: "success",
+        timer: 1500,
+      });
+    }
+  }
+
   useEffect(() => {
     if (parcelWeight) {
       const weight = parseFloat(parcelWeight);
@@ -146,7 +175,7 @@ const BookParcel = () => {
             {/* DELIVERY DATE */}
             <label className="form-control w-full  flex flex-col">
               <div className="label">
-                <span className="label-text"> Delivery Date*</span>
+                <span className="label-text"> Request Delivery Date*</span>
               </div>
               <input
                 type="date"
