@@ -8,6 +8,7 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AdminRoute from "./AdminRoute";
 import AllDeliveryMan from "../pages/Dashboard/Admin/AllDeliveryMan";
 import BookParcel from "../pages/Dashboard/User/BookParcel";
+import MyParcels from "../pages/Dashboard/User/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "bookparcel",
         element: <BookParcel></BookParcel>,
+      },
+      {
+        path: "myparcels",
+        element: <MyParcels></MyParcels>,
       },
       // ADMIN ROUTES
       {

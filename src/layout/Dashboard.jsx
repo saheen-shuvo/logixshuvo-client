@@ -1,6 +1,6 @@
 import { FaUsers } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
-import { IoLogoDropbox } from "react-icons/io";
+import { IoLogoDropbox, IoMdListBox } from "react-icons/io";
 import { IoStatsChart } from "react-icons/io5";
 import { PiUsersFourFill } from "react-icons/pi";
 import { NavLink, Outlet } from "react-router-dom";
@@ -68,6 +68,13 @@ const Dashboard = () => {
                   Book a Parcel
                 </NavLink>
               </li>
+
+              <li>
+            <NavLink to="/dashboard/myparcels">
+            <IoMdListBox />
+              My Parcels
+            </NavLink>
+          </li>
             </>
           )}
 
