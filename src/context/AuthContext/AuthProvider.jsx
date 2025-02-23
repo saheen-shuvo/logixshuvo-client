@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  // getAuth,
+  getAuth,
   GoogleAuthProvider,
 } from "firebase/auth";
 import auth from "../../firebase/firebase.init";
@@ -82,6 +82,7 @@ const AuthProvider = ({ children }) => {
     signInUser,
     signOutUser,
     signInWithGoogle,
+    getAuth
   };
 
   return (

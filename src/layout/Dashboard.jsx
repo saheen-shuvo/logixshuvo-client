@@ -1,4 +1,4 @@
-import { FaUsers } from "react-icons/fa";
+import { FaUserCircle, FaUsers } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import { IoLogoDropbox, IoMdListBox } from "react-icons/io";
 import { IoStatsChart } from "react-icons/io5";
@@ -70,11 +70,18 @@ const Dashboard = () => {
               </li>
 
               <li>
-            <NavLink to="/dashboard/myparcels">
-            <IoMdListBox />
-              My Parcels
-            </NavLink>
-          </li>
+                <NavLink to="/dashboard/myparcels">
+                  <IoMdListBox />
+                  My Parcels
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/myprofile">
+                <FaUserCircle />
+                  My Profile
+                </NavLink>
+              </li>
             </>
           )}
 
