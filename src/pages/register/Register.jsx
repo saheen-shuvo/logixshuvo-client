@@ -22,6 +22,7 @@ const Register = () => {
     const role = form.role.value;
     const name = form.name.value;
     const email = form.email.value;
+    const phone = form.phone.value;
     const password = form.password.value;
     const photo = form.photo?.value || "";
     const terms = form.terms.checked;
@@ -68,7 +69,7 @@ const Register = () => {
 
       toast.success("Account created successfully!");
 
-      const userInfo = { name, email, role };
+      const userInfo = { name, email, role, phone };
       console.log(userInfo);
 
       axiosPublic.post("/users", userInfo).then((res) => {
@@ -114,6 +115,18 @@ const Register = () => {
               type="text"
               name="name"
               placeholder="Username"
+              className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Phone Number</span>
+            </label>
+            <input
+              type="number"
+              name="phone"
+              placeholder="phone number"
               className="input input-bordered"
               required
             />

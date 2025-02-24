@@ -38,7 +38,7 @@ const AllDeliveryMan = () => {
               <tr>
                 <th>{index + 1}</th>
                 <td className="font-semibold">{user.name}</td>
-                <td className="font-semibold">phone number</td>
+                <td className="font-semibold">{user.phone}</td>
                 <th>
                 <button>
                     {user.role}

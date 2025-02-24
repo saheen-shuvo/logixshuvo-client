@@ -15,6 +15,14 @@ const AllUsers = () => {
     },
   });
 
+  const { data: bookedParcels = [] } = useQuery({
+    queryKey: ["bookedParcels"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/bookedParcels");
+      return res.data;
+    },
+  });
+
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleRoleChange = (_id, role) => {
@@ -96,7 +104,8 @@ const AllUsers = () => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Email</th>
+              <th>Phone</th>
+              <th>Parcels Booked</th>
               <th>Role</th>
               <th>Action</th>
             </tr>
@@ -106,9 +115,14 @@ const AllUsers = () => {
               <tr>
                 <th>{index + 1}</th>
                 <td className="font-semibold">{user.name}</td>
-                <td className="font-semibold">{user.email}</td>
+                <td className="font-semibold">
+                {bookedParcels.find((parcel) => parcel.email === user.email)?.phone || user.phone || "N/A"}
+                </td>
+                <td className="font-semibold">
+                {bookedParcels.filter((parcel) => parcel.email === user.email).length}
+                </td>
                 <th>
-                <button
+                  <button
                     onClick={() => {
                       setSelectedUser(user);
                       document.getElementById("role_modal").showModal();
