@@ -12,6 +12,7 @@ import MyParcels from "../pages/Dashboard/User/MyParcels";
 import UpdateParcel from "../pages/Dashboard/User/UpdateParcel";
 import MyProfile from "../pages/Dashboard/User/MyProfile";
 import AllParcels from "../pages/Dashboard/Admin/AllParcels";
+import MyDeliveryList from "../pages/Dashboard/Delivery Man/MyDeliveryList";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ export const router = createBrowserRouter([
       {
         path: "myprofile",
         element: <MyProfile></MyProfile>,
+      },
+      // DELIVERY MAN ROUTES
+      {
+        path: "mydeliverylist",
+        element: <MyDeliveryList></MyDeliveryList>,
       },
       // ADMIN ROUTES
       {

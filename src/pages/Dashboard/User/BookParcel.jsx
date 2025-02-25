@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import AuthContext from "../../../context/AuthContext/AuthContext";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const BookParcel = () => {
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const { register, handleSubmit, setValue, watch, reset } = useForm();
   const parcelWeight = watch("weight");
 
@@ -34,6 +36,7 @@ const BookParcel = () => {
     console.log(bookedParcels.data);
     if (bookedParcels.data.insertedId) {
       reset();
+      navigate('/dashboard/myparcels');
       Swal.fire({
         position: "center",
         title: `Your Parcel Booked Successfully!`,

@@ -1,4 +1,4 @@
-import { FaUserCircle, FaUsers } from "react-icons/fa";
+import { FaClipboardList, FaUserCircle, FaUsers } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import { IoLogoDropbox, IoMdListBox } from "react-icons/io";
 import { IoStatsChart } from "react-icons/io5";
@@ -51,6 +51,12 @@ const Dashboard = () => {
 
           {isDeliveryMan && (
             <>
+              <li>
+                <NavLink to="/dashboard/mydeliverylist">
+                <FaClipboardList />
+                  My Delivery List
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/dashboard/add">
                   <IoStatsChart />

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../context/AuthContext/AuthContext";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyParcels = () => {
   const { user } = useContext(AuthContext);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [parcels, setParcels] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,12 +36,12 @@ const MyParcels = () => {
       confirmButtonText: "Yes, cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/parcels/${id}`).then((response) => {
+        axiosSecure.delete(`/parcels/${id}`).then((response) => {
           console.log(response.data);
           if (response.data.success === true) {
             Swal.fire({
-              title: "Deleted!",
-              text: "The user has been deleted.",
+              title: "Canceled!",
+              text: "The has been canceled Successfully.",
               icon: "success",
             });
             setParcels((prevParcels) =>
