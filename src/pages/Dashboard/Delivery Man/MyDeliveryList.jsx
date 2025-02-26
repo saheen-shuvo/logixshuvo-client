@@ -11,7 +11,7 @@ const MyDeliveryList = () => {
     if (!user?.email) return;
     const fetchDeliveries = async () => {
       try {
-        const response = await axiosSecure.get("/bookedParcels", {
+        const response = await axiosSecure.get("/myassignedparcels", {
           params: { email: user.email },
         });
         console.log("API RESPONSE:", response.data);
