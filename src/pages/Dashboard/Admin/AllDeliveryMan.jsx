@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-key */
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { MdDeleteForever } from "react-icons/md";
 import DeliveredCount from "./DeliveredCount";
+import AverageRating from "./AverageRating";
 
 const AllDeliveryMan = () => {
   const axiosSecure = useAxiosSecure();
@@ -37,7 +37,7 @@ const AllDeliveryMan = () => {
                 <th>Name</th>
                 <th>Phone Number</th>
                 <th>Parcel Delivered</th>
-                <th>Review</th>
+                <th>Average Rating</th>
               </tr>
             </thead>
             <tbody>
@@ -50,9 +50,7 @@ const AllDeliveryMan = () => {
                     <DeliveredCount deliveryManId={user._id} />
                   </th>
                   <th>
-                    <button className="text-3xl text-red-600">
-                      <MdDeleteForever />
-                    </button>
+                  <AverageRating deliveryManId={user._id} />
                   </th>
                 </tr>
               ))}

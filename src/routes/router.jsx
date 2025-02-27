@@ -6,13 +6,13 @@ import Register from "../pages/register/Register";
 import Dashboard from "../layout/Dashboard";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AdminRoute from "./AdminRoute";
-import AllDeliveryMan from "../pages/Dashboard/Admin/AllDeliveryMan";
 import BookParcel from "../pages/Dashboard/User/BookParcel";
 import MyParcels from "../pages/Dashboard/User/MyParcels";
 import UpdateParcel from "../pages/Dashboard/User/UpdateParcel";
 import MyProfile from "../pages/Dashboard/User/MyProfile";
 import AllParcels from "../pages/Dashboard/Admin/AllParcels";
 import MyDeliveryList from "../pages/Dashboard/Delivery Man/MyDeliveryList";
+import AllDeliveryMan from "../pages/Dashboard/Admin/AllDeliveryMan";
 
 export const router = createBrowserRouter([
   {

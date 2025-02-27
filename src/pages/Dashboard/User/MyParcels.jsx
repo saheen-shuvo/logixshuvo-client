@@ -9,6 +9,9 @@ const MyParcels = () => {
   const axiosSecure = useAxiosSecure();
   const [parcels, setParcels] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedParcel, setSelectedParcel] = useState(null);
+  const [rating, setRating] = useState(5);
+  const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
     if (user?.email) {
@@ -53,8 +56,39 @@ const MyParcels = () => {
     });
   };
 
-  const handleReview = (id) => {
-    console.log(`Review parcel: ${id}`);
+  const handleReview = (parcel) => {
+    setSelectedParcel(parcel);
+  };
+
+  const submitReview = () => {
+    if (!rating || !feedback) {
+      Swal.fire("Error", "Please fill out all fields!", "error");
+      return;
+    }
+
+    if (rating < 1 || rating > 5) {
+      Swal.fire("Error", "Rating must be between 1 and 5", "error");
+      return;
+    }
+
+    const reviewData = {
+      userName: user?.displayName,
+      userImage: user?.photoURL,
+      rating,
+      feedback,
+      deliveryManId: selectedParcel.deliveryManId,
+      reviewDate: new Date().toISOString(),
+    };
+
+    axiosSecure.post("/reviews", reviewData).then((response) => {
+      console.log(response)
+      if (response.data.success) {
+        Swal.fire("Success", "Review submitted successfully!", "success");
+        setSelectedParcel(null);
+        setFeedback("");
+        setRating(5);
+      }
+    });
   };
 
   const handlePayment = (id) => {
@@ -130,7 +164,7 @@ const MyParcels = () => {
 
                       {parcel.deliveryStatus === "delivered" ? (
                         <button
-                          onClick={() => handleReview(parcel._id)}
+                          onClick={() => handleReview(parcel)}
                           className="bg-green-500 text-white px-2 py-1 rounded text-xs md:text-sm"
                         >
                           Review
@@ -156,6 +190,61 @@ const MyParcels = () => {
               ))}
             </tbody>
           </table>
+          {selectedParcel && (
+            <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+              <div className="bg-blue-200  p-5 rounded-lg w-96">
+                <h3 className="text-xl font-bold mb-4">Give Review</h3>
+                <p>
+                  <strong>Name:</strong> {user.displayName}
+                </p>
+                <p>
+                  <strong>Image:</strong>{" "}
+                  <img
+                    src={user.photoURL}
+                    alt="User"
+                    className="w-10 h-10 rounded-full inline-block ml-2"
+                  />
+                </p>
+                <p>
+                  <strong>Delivery Man ID:</strong>{" "}
+                  {selectedParcel.deliveryManId}
+                </p>
+                <div className="mt-2">
+                  <label>Rating:</label>
+                  <input
+                    type="number"
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                    min="1"
+                    max="5"
+                    className="border p-2 w-full"
+                  />
+                </div>
+                <div className="mt-2">
+                  <label>Feedback:</label>
+                  <textarea
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                    className="border p-2 w-full"
+                  />
+                </div>
+                <div className="mt-4 flex justify-end gap-2">
+                  <button
+                    onClick={() => setSelectedParcel(null)}
+                    className="bg-gray-500 text-white px-3 py-1 btn rounded"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={submitReview}
+                    className="bg-blue-500 text-white px-3 py-1 rounded btn"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const DeliveredCount = ({ deliveryManId }) => {
-  console.log(deliveryManId);
   const axiosSecure = useAxiosSecure();
 
   const fetchDeliveredCount = async () => {
