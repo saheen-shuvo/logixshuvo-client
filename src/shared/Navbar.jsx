@@ -29,12 +29,6 @@ const Navbar = () => {
           Notifications
         </NavLink>
       </li>
-      <li className="font-semibold flex items-center">
-        <NavLink to="/signin">Sign in</NavLink>
-      </li>
-      <li className="font-semibold flex items-center">
-        <NavLink to="/register">Register</NavLink>
-      </li>
     </>
   );
 

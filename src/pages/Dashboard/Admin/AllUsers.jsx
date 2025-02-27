@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], refetch } = useQuery({
+  const { data: users = [], refetch, isLoading: isUsersLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -15,7 +15,7 @@ const AllUsers = () => {
     },
   });
 
-  const { data: bookedParcels = [] } = useQuery({
+  const { data: bookedParcels = [], isLoading: isParcelsLoading } = useQuery({
     queryKey: ["bookedParcels"],
     queryFn: async () => {
       const res = await axiosSecure.get("/bookedParcels");
@@ -90,6 +90,8 @@ const AllUsers = () => {
     });
   };
 
+  const isLoading = isUsersLoading || isParcelsLoading;
+
   return (
     <div>
       <div className="flex justify-evenly my-4">
@@ -97,7 +99,12 @@ const AllUsers = () => {
         <h2 className="text-2xl font-semibold">Total Users: {users.length}</h2>
       </div>
       {/* TABLE */}
-      <div className="overflow-x-auto">
+      {isLoading ? (
+        <div className="flex justify-center items-center mt-28">
+          <span className="loading loading-bars loading-lg"></span>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
         <table className="table w-full">
           {/* head */}
           <thead>
@@ -145,6 +152,7 @@ const AllUsers = () => {
           </tbody>
         </table>
       </div>
+      )}
       <dialog id="role_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           {selectedUser && (
