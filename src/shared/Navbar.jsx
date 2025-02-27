@@ -24,7 +24,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li className="font-semibold flex items-center">
-        <NavLink to="/menu">
+        <NavLink to="/">
           <RiNotification3Line />
           Notifications
         </NavLink>
