@@ -7,6 +7,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useDeliveryMan from "../hooks/useDeliveryMan";
 import { FaBoxesPacking } from "react-icons/fa6";
+import { MdReviews } from "react-icons/md";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
@@ -57,10 +58,11 @@ const Dashboard = () => {
                   My Delivery List
                 </NavLink>
               </li>
+
               <li>
-                <NavLink to="/dashboard/add">
-                  <IoStatsChart />
-                  Statistics
+                <NavLink to="/dashboard/myreviews">
+                <MdReviews />
+                  My Reviews
                 </NavLink>
               </li>
             </>

@@ -32,8 +32,8 @@ const Counter = () => {
     const deliveredCount = bookedParcels.filter(parcel => parcel.deliveryStatus === "delivered").length
 
   return (
-    <div className="w-full mx-auto flex justify-center">
-      <div className="stats shadow mt-8 lg:mt-16 max-w-screen-xl mx-auto w-full">
+    <div className="w-full mx-auto mt-8 lg:mt-16 flex justify-center max-w-screen-xl">
+      <div className="stats shadow  mx-4 lg:mx-0 w-full">
         <div className="stat">
           <div className="stat-figure text-blue-800 text-3xl">
           <FaBoxesStacked />
@@ -74,7 +74,7 @@ const Counter = () => {
           <div className="stat-figure text-blue-800 text-3xl">
           <FaUsers />
           </div>
-          <div className="stat-title font-semibold">Total Registed Users</div>
+          <div className="stat-title font-semibold">Total Registered Users</div>
           <div className="stat-value">
             {" "}
             <CountUp start={0} end={userCount} delay={0}>
