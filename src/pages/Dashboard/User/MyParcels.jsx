@@ -81,7 +81,7 @@ const MyParcels = () => {
     };
 
     axiosSecure.post("/reviews", reviewData).then((response) => {
-      console.log(response)
+      console.log(response);
       if (response.data.success) {
         Swal.fire("Success", "Review submitted successfully!", "success");
         setSelectedParcel(null);
@@ -89,10 +89,6 @@ const MyParcels = () => {
         setRating(5);
       }
     });
-  };
-
-  const handlePayment = (id) => {
-    console.log(`Pay for parcel: ${id}`);
   };
 
   if (loading)
@@ -178,12 +174,23 @@ const MyParcels = () => {
                         </button>
                       )}
 
-                      <button
-                        onClick={() => handlePayment(parcel._id)}
-                        className="bg-yellow-500 text-white px-2 py-1 rounded text-xs md:text-sm"
-                      >
-                        Pay
-                      </button>
+                      {parcel.deliveryStatus === "pending" ? (
+                        <Link to="/dashboard/payment"
+                         state={{ deliveryCharge: parcel.deliveryCharge }}>
+                          <button
+                            className="bg-yellow-500 text-white px-2 py-1 rounded text-xs md:text-sm"
+                          >
+                            Pay
+                          </button>
+                        </Link>
+                      ) : (
+                        <button
+                          disabled
+                          className="bg-gray-400 text-white px-2 py-1 rounded text-xs md:text-sm cursor-not-allowed opacity-50"
+                        >
+                          Pay
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

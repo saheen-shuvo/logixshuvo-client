@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";

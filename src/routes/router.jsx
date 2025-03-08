@@ -14,6 +14,7 @@ import AllParcels from "../pages/Dashboard/Admin/AllParcels";
 import MyDeliveryList from "../pages/Dashboard/Delivery Man/MyDeliveryList";
 import AllDeliveryMan from "../pages/Dashboard/Admin/AllDeliveryMan";
 import MyReviews from "../pages/Dashboard/Delivery Man/MyReviews";
+import Payment from "../pages/Dashboard/User/payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: "updateparcel/:id",
         element: <UpdateParcel></UpdateParcel>,
+      },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
       },
       {
         path: "myprofile",
