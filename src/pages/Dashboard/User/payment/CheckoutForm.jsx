@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../../../../context/AuthContext/AuthContext";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
@@ -13,17 +14,16 @@ const CheckoutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
-  const deliveryCharge = location.state?.deliveryCharge || 0;
-  console.log(deliveryCharge);
+  const parcel = location.state?.parcel || "No Parcel Found";
+  // console.log(parcel);
 
   useEffect(() => {
     axiosSecure
-      .post("/create-payment-intent", { charge: deliveryCharge })
+      .post("/create-payment-intent", { charge: parcel?.deliveryCharge })
       .then((res) => {
-        console.log(res.data.clientSecret);
         setClientSecret(res.data.clientSecret);
       });
-  }, [axiosSecure, deliveryCharge]);
+  }, [axiosSecure, parcel?.deliveryCharge]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -68,22 +68,23 @@ const CheckoutForm = () => {
       } else {
         console.log("payment intent", paymentIntent);
         if (paymentIntent.status === "succeeded") {
-          console.log("transaction id", paymentIntent.id);
+          // console.log("transaction id", paymentIntent.id);
           setTransactionId(paymentIntent.id);
-  
-          // const payment = {
-          //   email: user.email,
-          //   price: totalPrice,
-          //   transactionId: paymentIntent.id,
-          //   date: new Date(), //UTC data convert using moment js
-          //   cartIds: cart.map((item) => item._id),
-          //   menuItemIds: cart.map((item) => item.menuId),
-          //   status: "pending",
-          // };
-          // const res = await axiosSecure.post("/payments", payment);
-          // console.log("payment saved", res.data);
-          // refetch();
-          // TODO: ADD SWEET ALERT ON SUCCESSFUL PAYMENT
+           Swal.fire("Success", "Payment Successful!", "success");
+
+          //  NOW POST THE PAYMENT INTO DB
+          const payment = {
+            email: user?.email,
+            charge: parcel?.deliveryCharge,
+            transactionId: paymentIntent.id,
+            date: new Date(),
+            parcelId: parcel?._id,
+            paymentStatus: "paid"
+          }
+
+          const res = await axiosSecure.post('/payments', payment);
+          console.log('payment saved', res);
+
         }
       }
   };
