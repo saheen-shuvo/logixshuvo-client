@@ -174,12 +174,16 @@ const MyParcels = () => {
                         </button>
                       )}
 
-                      {parcel.deliveryStatus === "pending" ? (
-                        <Link to="/dashboard/payment"
-                         state={{parcel}}>
-                          <button
-                            className="bg-yellow-500 text-white px-2 py-1 rounded text-xs md:text-sm"
-                          >
+                      {parcel.paymentStatus === "paid" ? (
+                        <button
+                          disabled
+                          className="bg-green-500 text-white px-2 py-1 rounded text-xs md:text-sm cursor-not-allowed"
+                        >
+                          Paid
+                        </button>
+                      ) : parcel.deliveryStatus === "pending" ? (
+                        <Link to="/dashboard/payment" state={{ parcel }}>
+                          <button className="bg-yellow-500 text-white px-2 py-1 rounded text-xs md:text-sm">
                             Pay
                           </button>
                         </Link>

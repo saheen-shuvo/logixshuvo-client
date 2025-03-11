@@ -15,7 +15,6 @@ const CheckoutForm = () => {
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
   const parcel = location.state?.parcel || "No Parcel Found";
-  // console.log(parcel);
 
   useEffect(() => {
     axiosSecure
@@ -33,7 +32,6 @@ const CheckoutForm = () => {
     }
 
     const card = elements.getElement(CardElement);
-
     if (card == null) {
       return;
     }
@@ -46,6 +44,7 @@ const CheckoutForm = () => {
     if (error) {
       console.log("[error]", error);
       setError(error.message);
+      return;
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       setError("");
@@ -63,30 +62,37 @@ const CheckoutForm = () => {
         },
       });
 
-      if (confirmError) {
-        console.log("confirm error");
-      } else {
-        console.log("payment intent", paymentIntent);
-        if (paymentIntent.status === "succeeded") {
-          // console.log("transaction id", paymentIntent.id);
-          setTransactionId(paymentIntent.id);
-           Swal.fire("Success", "Payment Successful!", "success");
+    if (confirmError) {
+      console.log("Confirm error:", confirmError);
+      return;
+    }
 
-          //  NOW POST THE PAYMENT INTO DB
-          const payment = {
-            email: user?.email,
-            charge: parcel?.deliveryCharge,
-            transactionId: paymentIntent.id,
-            date: new Date(),
-            parcelId: parcel?._id,
-            paymentStatus: "paid"
-          }
+    if (paymentIntent.status === "succeeded") {
+      setTransactionId(paymentIntent.id);
+      Swal.fire("Success", "Payment Successful!", "success");
 
-          const res = await axiosSecure.post('/payments', payment);
-          console.log('payment saved', res);
+      // POST THE PAYMENT INTO DB
+      const payment = {
+        email: user?.email,
+        charge: parcel?.deliveryCharge,
+        transactionId: paymentIntent.id,
+        date: new Date(),
+        parcelId: parcel?._id,
+        paymentStatus: "paid",
+      };
 
-        }
+      const res = await axiosSecure.post("/payments", payment);
+      console.log("Payment saved:", res);
+
+      // UPDATE PAYMENT STATUS IN BOOKED PARCELS
+      if (res.data.insertedId) {
+        const updateRes = await axiosSecure.patch(`/updatePaymentStatus/${parcel?._id}`, {
+          paymentStatus: "paid",
+        });
+
+        console.log("Payment status updated:", updateRes);
       }
+    }
   };
 
   return (
