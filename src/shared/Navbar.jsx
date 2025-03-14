@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/image/logo.svg";
-import { RiNotification3Line } from "react-icons/ri";
+// import { RiNotification3Line } from "react-icons/ri";
 import AuthContext from "../context/AuthContext/AuthContext";
 import { MdLogout } from "react-icons/md";
 
@@ -23,12 +23,12 @@ const Navbar = () => {
       <li className="font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      <li className="font-semibold flex items-center">
+      {/* <li className="font-semibold flex items-center">
         <NavLink to="/">
           <RiNotification3Line />
           Notifications
         </NavLink>
-      </li>
+      </li> */}
     </>
   );
 
