@@ -23,12 +23,11 @@ const Navbar = () => {
       <li className="font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      {/* <li className="font-semibold flex items-center">
-        <NavLink to="/">
-          <RiNotification3Line />
-          Notifications
+      <li className="font-semibold flex items-center">
+        <NavLink to="/dashboard">
+          Dashboard
         </NavLink>
-      </li> */}
+      </li>
     </>
   );
 

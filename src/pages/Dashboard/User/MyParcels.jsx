@@ -15,14 +15,16 @@ const MyParcels = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://logixshuvo-server.vercel.app/parcels?email=${user.email}`)
+      fetch(
+        `https://logixshuvo-server-saheen-alam-shuvos-projects.vercel.app/parcels?email=${user.email}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setParcels(data);
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching parcels:", error);
+          console.log("Error fetching parcels:", error);
           setLoading(false);
         });
     }

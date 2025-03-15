@@ -6,37 +6,39 @@ import { MdDeliveryDining } from "react-icons/md";
 import { useEffect, useState } from "react";
 
 const Counter = () => {
-    const axiosPublic = useAxiosPublic();
-    const [userCount, setUserCount] = useState(0);
+  const axiosPublic = useAxiosPublic();
+  const [userCount, setUserCount] = useState(0);
 
-    // Fetch booked parcels
-    const { data: bookedParcels = []} = useQuery({
-      queryKey: ["bookedParcels"],
-      queryFn: async () => {
-        const res = await axiosPublic.get("/bookedParcels");
-        return res.data;
-      },
-    });
+  // Fetch booked parcels
+  const { data: bookedParcels = [] } = useQuery({
+    queryKey: ["bookedParcels"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/bookedParcels");
+      return res.data;
+    },
+  });
 
-    // Fetch Users
-    useEffect(() => {
-        axiosPublic.get('/users/count')
-          .then((res) => 
-            {
-                console.log(res.data) 
-                setUserCount(res.data.totalUsers)
-            })
-          .catch((error) => console.error("Error fetching user count:", error));
-      }, [axiosPublic]);
+  // Fetch Users
+  useEffect(() => {
+    axiosPublic
+      .get("/users/count")
+      .then((res) => {
+        console.log(res.data);
+        setUserCount(res.data.totalUsers);
+      })
+      .catch((error) => console.error("Error fetching user count:", error));
+  }, [axiosPublic]);
 
-    const deliveredCount = bookedParcels.filter(parcel => parcel.deliveryStatus === "delivered").length
+  const deliveredCount = bookedParcels.filter(
+    (parcel) => parcel.deliveryStatus === "delivered"
+  ).length;
 
   return (
     <div className="w-full mx-auto mt-8 lg:mt-16 flex justify-center max-w-screen-xl">
-      <div className="stats shadow  mx-4 lg:mx-0 w-full">
+      <div className="stats shadow-lg flex flex-col md:flex-row  mx-4 lg:mx-0 w-full">
         <div className="stat">
           <div className="stat-figure text-blue-800 text-3xl">
-          <FaBoxesStacked />
+            <FaBoxesStacked />
           </div>
           <div className="stat-title font-semibold">Total Parcels Booked</div>
           <div className="stat-value">
@@ -54,9 +56,11 @@ const Counter = () => {
 
         <div className="stat">
           <div className="stat-figure  text-blue-800 text-4xl">
-          <MdDeliveryDining />
+            <MdDeliveryDining />
           </div>
-          <div className="stat-title font-semibold">Total Parcels Delivered</div>
+          <div className="stat-title font-semibold">
+            Total Parcels Delivered
+          </div>
           <div className="stat-value">
             {" "}
             <CountUp start={0} end={deliveredCount} delay={0}>
@@ -72,7 +76,7 @@ const Counter = () => {
 
         <div className="stat">
           <div className="stat-figure text-blue-800 text-3xl">
-          <FaUsers />
+            <FaUsers />
           </div>
           <div className="stat-title font-semibold">Total Registered Users</div>
           <div className="stat-value">

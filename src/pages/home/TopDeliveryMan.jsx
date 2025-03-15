@@ -11,7 +11,7 @@ const TopDeliveryMan = () => {
         </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-4 md:mx-0 mt-12">
         {/* Delivery Man 1 */}
-        <div className="card bg-base-100 shadow-sm">
+        <div className="card bg-base-100 shadow-lg">
           <figure className="px-10 pt-10">
             <img
               src="https://i.ibb.co.com/5XHSxH9p/dm-1.jpg"
@@ -30,7 +30,7 @@ const TopDeliveryMan = () => {
           </div>
         </div>
         {/* Delivery Man 2 */}
-        <div className="card bg-base-100  shadow-sm">
+        <div className="card bg-base-100  shadow-lg">
           <figure className="px-10 pt-10">
             <img
               src="https://i.ibb.co.com/PZqjCXCS/dm-2.jpg"
@@ -49,7 +49,7 @@ const TopDeliveryMan = () => {
           </div>
         </div>
         {/* Delivery Man 3 */}
-        <div className="card bg-base-100 shadow-sm">
+        <div className="card bg-base-100 shadow-lg">
           <figure className="px-10 pt-10">
             <img
               src="https://i.ibb.co.com/zHGzZHxT/dm-3.jpg"

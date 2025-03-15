@@ -15,6 +15,7 @@ import MyDeliveryList from "../pages/Dashboard/Delivery Man/MyDeliveryList";
 import AllDeliveryMan from "../pages/Dashboard/Admin/AllDeliveryMan";
 import MyReviews from "../pages/Dashboard/Delivery Man/MyReviews";
 import Payment from "../pages/Dashboard/User/payment/Payment";
+import Statistics from "../pages/Dashboard/Admin/Statistics";
 
 export const router = createBrowserRouter([
   {
@@ -91,6 +92,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllParcels></AllParcels>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "statistics",
+        element: (
+          <AdminRoute>
+            <Statistics></Statistics>
           </AdminRoute>
         ),
       },
