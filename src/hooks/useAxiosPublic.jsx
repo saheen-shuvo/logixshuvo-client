@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosPublic = axios.create({
-  baseURL: "https://logixshuvo-server-saheen-alam-shuvos-projects.vercel.app",
+  baseURL: "https://logixshuvo-server.vercel.app",
 });
 
 const useAxiosPublic = () => {

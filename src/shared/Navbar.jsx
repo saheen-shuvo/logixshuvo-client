@@ -4,9 +4,12 @@ import logo from "../assets/image/logo.svg";
 // import { RiNotification3Line } from "react-icons/ri";
 import AuthContext from "../context/AuthContext/AuthContext";
 import { MdLogout } from "react-icons/md";
+import useUserRole from "../hooks/useUserRole";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
+  const userRole = useUserRole();
+  console.log(userRole)
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
@@ -18,13 +21,24 @@ const Navbar = () => {
     document.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
 
+  let staticDashboardRoute = "";
+  if(userRole === 'admin'){
+    staticDashboardRoute = '/dashboard/statistics';
+  }
+  else if (userRole === 'deliveryman'){
+    staticDashboardRoute = '/dashboard/mydeliverylist';
+  }
+  else {
+    staticDashboardRoute = '/dashboard/bookparcel';
+  }
+
   const links = (
     <>
       <li className="font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
       <li className="font-semibold flex items-center">
-        <NavLink to="/dashboard">
+        <NavLink to={staticDashboardRoute}>
           Dashboard
         </NavLink>
       </li>
@@ -107,7 +121,7 @@ const Navbar = () => {
                   {user.displayName || "Unknown User"}
                 </h3>
                 <p>
-                <NavLink className="p-2 mt-2 font-semibold btn btn-primary w-full" to="/dashboard">
+                <NavLink className="p-2 mt-2 font-semibold btn btn-primary w-full" to={staticDashboardRoute}>
                   Dashboard
                 </NavLink>
                 </p>

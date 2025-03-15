@@ -36,18 +36,14 @@ const SignIn = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        navigate(from, { replace: true });
         form.reset();
         toast.success("Logged in Successfully.");
+        navigate(from, { replace: true });
       })
       .catch(() => {
         toast.warn("Wrong Credentials. Try again.");
       });
   };
-  // axios
-  //   .post("https://job-portal-server-six-sigma.vercel.app/jwt", user, {
-  //     withCredentials: true,
-  //   })
 
   const handleValidateCaptcha = (e) => {
     e.preventDefault();
