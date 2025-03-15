@@ -98,7 +98,7 @@ const AllParcels = () => {
       <div className="overflow-x-auto">
         <table className="border-collapse border w-full min-w-max">
           <thead>
-            <tr className="bg-gray-200 text-sm md:text-base">
+            <tr className="bg-base-300 text-sm md:text-base">
               <th className="border p-2">Name</th>
               <th className="border p-2">Phone</th>
               <th className="border p-2">Booked</th>
