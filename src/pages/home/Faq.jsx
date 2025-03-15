@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 const Faq = () => {
   return (
     <div className="my-8 md:my-12 max-w-7xl mx-auto px-4 md:px-0">
