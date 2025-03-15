@@ -22,16 +22,18 @@ const Dashboard = () => {
       <aside className="h-screen">
         <nav className="h-full flex flex-col border-r border-gray-400 shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
-            <p className={`text-sm md:text-[17px] font-bold  flex items-center overflow-hidden transition-all ${
-                        expanded ? "w-32" : "w-0"
-                      }`}>
+            <p
+              className={`text-sm md:text-[17px] font-bold  flex items-center overflow-hidden transition-all ${
+                expanded ? "w-32" : "w-0"
+              }`}
+            >
               {" "}
               <img className="w-7" src={logo} alt="" />
               Logi<span className="text-[#ff6a00]">X</span>Shuvo
             </p>
             <button
               onClick={() => setExpanded((curr) => !curr)}
-              className="btn font-semibold"
+              className="btn btn-xs font-semibold"
             >
               {expanded ? (
                 <LuChevronFirst></LuChevronFirst>
@@ -154,25 +156,25 @@ const Dashboard = () => {
                     </span>
                   </NavLink>
                 </li>
-
-                <li>
-                  <NavLink to="/dashboard/myprofile">
-                    <FaUserCircle />
-                    <span
-                      className={`overflow-hidden transition-all ${
-                        expanded ? "w-32" : "w-0"
-                      }`}
-                    >
-                      My Profile
-                    </span>
-                  </NavLink>
-                </li>
               </>
             )}
 
             <div className="divider"></div>
 
             {/* SHARED NAV LINKS */}
+            <li>
+              <NavLink to="/dashboard/myprofile">
+                <FaUserCircle />
+                <span
+                  className={`overflow-hidden transition-all ${
+                    expanded ? "w-32" : "w-0"
+                  }`}
+                >
+                  My Profile
+                </span>
+              </NavLink>
+            </li>
+
             <li>
               <NavLink to="/">
                 <FiHome />
