@@ -7,7 +7,11 @@ import { useState } from "react";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], refetch, isLoading: isUsersLoading } = useQuery({
+  const {
+    data: users = [],
+    refetch,
+    isLoading: isUsersLoading,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -94,10 +98,9 @@ const AllUsers = () => {
 
   return (
     <div>
-      <div className="flex justify-evenly my-4">
-        <h2 className="text-2xl font-semibold">All Users</h2>
-        <h2 className="text-2xl font-semibold">Total Users: {users.length}</h2>
-      </div>
+      <h2 className="text-3xl font-bold my-4 text-center">
+        ALL BOOKED PARCELS
+      </h2>
       {/* TABLE */}
       {isLoading ? (
         <div className="flex justify-center items-center mt-28">
@@ -105,53 +108,60 @@ const AllUsers = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-        <table className="table w-full">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Parcels Booked</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
+          <table className="table w-full">
+            {/* head */}
+            <thead>
               <tr>
-                <th>{index + 1}</th>
-                <td className="font-semibold">{user.name}</td>
-                <td className="font-semibold">
-                {bookedParcels.find((parcel) => parcel.email === user.email)?.phone || user.phone || "N/A"}
-                </td>
-                <td className="font-semibold">
-                {bookedParcels.filter((parcel) => parcel.email === user.email).length}
-                </td>
-                <th>
-                  <button
-                    onClick={() => {
-                      setSelectedUser(user);
-                      document.getElementById("role_modal").showModal();
-                    }}
-                    className="btn btn-primary w-20 btn-xs"
-                  >
-                    {user.role}
-                  </button>
-                </th>
-                <th>
-                  <button
-                    onClick={() => handleDeleteUser(user)}
-                    className="text-3xl text-red-600"
-                  >
-                    <MdDeleteForever />
-                  </button>
-                </th>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Parcels Booked</th>
+                <th>Role</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr>
+                  <th>{index + 1}</th>
+                  <td className="font-semibold">{user.name}</td>
+                  <td className="font-semibold">
+                    {bookedParcels.find((parcel) => parcel.email === user.email)
+                      ?.phone ||
+                      user.phone ||
+                      "N/A"}
+                  </td>
+                  <td className="font-semibold">
+                    {
+                      bookedParcels.filter(
+                        (parcel) => parcel.email === user.email
+                      ).length
+                    }
+                  </td>
+                  <th>
+                    <button
+                      onClick={() => {
+                        setSelectedUser(user);
+                        document.getElementById("role_modal").showModal();
+                      }}
+                      className="btn btn-primary w-20 btn-xs"
+                    >
+                      {user.role}
+                    </button>
+                  </th>
+                  <th>
+                    <button
+                      onClick={() => handleDeleteUser(user)}
+                      className="text-3xl text-red-600"
+                    >
+                      <MdDeleteForever />
+                    </button>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <dialog id="role_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">

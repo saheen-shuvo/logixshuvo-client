@@ -16,12 +16,9 @@ const AllDeliveryMan = () => {
 
   return (
     <div>
-      <div className="flex justify-evenly my-4">
-        <h2 className="text-2xl font-semibold">All Delivery Man</h2>
-        <h2 className="text-2xl font-semibold">
-          Total Delivery Man: {deliveryman.length}
-        </h2>
-      </div>
+      <h2 className="text-3xl font-bold my-4 text-center">
+        ALL BOOKED PARCELS
+      </h2>
       {/* TABLE */}
       {isLoading ? (
         <div className="flex justify-center items-center mt-28">
@@ -50,7 +47,7 @@ const AllDeliveryMan = () => {
                     <DeliveredCount deliveryManId={user._id} />
                   </th>
                   <th>
-                  <AverageRating deliveryManId={user._id} />
+                    <AverageRating deliveryManId={user._id} />
                   </th>
                 </tr>
               ))}
