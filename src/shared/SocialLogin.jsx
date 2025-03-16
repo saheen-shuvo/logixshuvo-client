@@ -32,7 +32,7 @@ const SocialLogin = () => {
   };
   return (
     <div>
-      <button onClick={handleGoogleSignIn} className="btn btn-outline mb-4 w-full">
+      <button onClick={handleGoogleSignIn} className="btn shadow-sm mb-4 w-full">
       <FcGoogle /> Google
       </button>
     </div>

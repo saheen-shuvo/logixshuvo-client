@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";

@@ -9,7 +9,7 @@ import useUserRole from "../hooks/useUserRole";
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
   const userRole = useUserRole();
-  console.log(userRole)
+  console.log(userRole);
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
@@ -22,14 +22,12 @@ const Navbar = () => {
   }, [theme]);
 
   let staticDashboardRoute = "";
-  if(userRole === 'admin'){
-    staticDashboardRoute = '/dashboard/statistics';
-  }
-  else if (userRole === 'deliveryman'){
-    staticDashboardRoute = '/dashboard/mydeliverylist';
-  }
-  else {
-    staticDashboardRoute = '/dashboard/bookparcel';
+  if (userRole === "admin") {
+    staticDashboardRoute = "/dashboard/statistics";
+  } else if (userRole === "deliveryman") {
+    staticDashboardRoute = "/dashboard/mydeliverylist";
+  } else {
+    staticDashboardRoute = "/dashboard/bookparcel";
   }
 
   const links = (
@@ -37,11 +35,11 @@ const Navbar = () => {
       <li className="font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      <li className="font-semibold flex items-center">
-        <NavLink to={staticDashboardRoute}>
-          Dashboard
-        </NavLink>
-      </li>
+      {user && (
+        <li className="font-semibold">
+          <NavLink to={staticDashboardRoute}>Dashboard</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -121,9 +119,12 @@ const Navbar = () => {
                   {user.displayName || "Unknown User"}
                 </h3>
                 <p>
-                <NavLink className="p-2 mt-2 font-semibold btn btn-primary w-full" to={staticDashboardRoute}>
-                  Dashboard
-                </NavLink>
+                  <NavLink
+                    className="p-2 mt-2 font-semibold btn btn-primary w-full"
+                    to={staticDashboardRoute}
+                  >
+                    Dashboard
+                  </NavLink>
                 </p>
                 <button
                   onClick={handleSignOut}

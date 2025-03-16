@@ -13,9 +13,17 @@ import { useState } from "react";
 import logo from "../assets/image/logo.svg";
 
 const Dashboard = () => {
-  const [isAdmin] = useAdmin();
-  const [isDeliveryMan] = useDeliveryMan();
+  const [isAdmin, isAdminLoading] = useAdmin();
+  const [isDeliveryMan, isDeliveryManLoading] = useDeliveryMan();
   const [expanded, setExpanded] = useState(true);
+
+  if (isAdminLoading || isDeliveryManLoading) {
+    return (
+      <div className="flex justify-center items-center mt-28">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex">

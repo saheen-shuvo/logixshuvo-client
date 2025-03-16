@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import axios from "axios";
 import AuthContext from "../../context/AuthContext/AuthContext";
 import { toast } from "react-toastify";
 import {
@@ -9,11 +8,13 @@ import {
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
-// import authImg from "../../assets/others/authentication2.png";
 import SocialLogin from "../../shared/SocialLogin";
-import authImg from '../../assets/image/authentication.gif'
+import authImg from "../../assets/image/authentication.gif";
+import { GoSignIn } from "react-icons/go";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
@@ -55,16 +56,57 @@ const SignIn = () => {
     }
   };
 
+  // Test Log in
+  const handleTestLogin = (role) => {
+    if (role === "admin") {
+      setEmail("shuvo@gmail.com");
+      setPassword("Sa123456");
+    } else if (role === "deliveryman") {
+      setEmail("dipto@gmail.com");
+      setPassword("Sa123456");
+    } else if (role === "user") {
+      setEmail("bickrom@gmail.com");
+      setPassword("Sa123456");
+    }
+  };
+
   return (
     <div className="auth-bg hero min-h-screen flex flex-col lg:flex-row-reverse items-center justify-center p-4 lg:gap-28">
       {/* SIDE IMAGE SECTION */}
       <div className="w-full lg:w-[30%] flex justify-center mt-14 lg:mt-0 mb-6 lg:mb-0">
-        <img className="rounded-full border-8 border-dotted" src={authImg} alt="" />
+        <img
+          className="rounded-full border-8 border-dotted"
+          src={authImg}
+          alt=""
+        />
       </div>
 
       {/* Form Section */}
       <div className="card  w-full max-w-sm lg:w-[70%] shadow-2xl p-6 bg-base-300 mb-8 lg:mb-0">
         <h1 className="text-center text-3xl font-bold mb-6">Sign in now!</h1>
+        <div>
+          <h1 className="text-base">Demo Login for Testing: </h1>
+          <div className="flex gap-1 my-1">
+            <button
+              onClick={() => handleTestLogin("admin")}
+              className="btn btn-xs btn-primary w-[70px]"
+            >
+              Admin
+            </button>
+            <button
+              onClick={() => handleTestLogin("deliveryman")}
+              className="btn btn-xs btn-primary w-[72px]"
+            >
+              Deliveryman
+            </button>
+            <button
+              onClick={() => handleTestLogin("user")}
+              className="btn btn-xs btn-primary w-[70px]"
+            >
+              User
+            </button>
+          </div>
+        </div>
         <form onSubmit={handleSignIn} className="space-y-4">
           <div className="form-control">
             <label className="label">
@@ -74,6 +116,7 @@ const SignIn = () => {
               type="email"
               name="email"
               placeholder="email"
+              value={email}
               className="input input-bordered"
               required
             />
@@ -86,6 +129,7 @@ const SignIn = () => {
               type="password"
               name="password"
               placeholder="password"
+              value={password}
               className="input input-bordered"
               required
             />
@@ -97,7 +141,8 @@ const SignIn = () => {
                   to="/register"
                 >
                   Click here
-                </Link> to register.
+                </Link>{" "}
+                to register.
               </p>
             </label>
           </div>
@@ -116,14 +161,14 @@ const SignIn = () => {
             {/* USED CAPTCHA: npm install react-simple-captcha */}
             <button
               onClick={handleValidateCaptcha}
-              className="btn btn-outline btn-xs mt-2 w-full"
+              className="btn shadow-sm btn-xs mt-2 w-full"
             >
               Validate
             </button>
           </div>
           <div className="form-control mt-6">
             <button disabled={disabled} className="btn btn-primary w-full">
-              Sign in
+              Sign in <GoSignIn />
             </button>
           </div>
         </form>
