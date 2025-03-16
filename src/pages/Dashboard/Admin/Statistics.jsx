@@ -96,7 +96,7 @@ const Statistics = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row justify-center items-center px-4 lg:px-0">
+      <div className="flex flex-col xl:flex-row justify-center items-center px-4 lg:px-0">
         {/* BAR CHART */}
         <div className="w-full lg:w-1/2 flex justify-center mb-8 lg:mb-0">
           <BarChart

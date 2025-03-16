@@ -89,19 +89,19 @@ const SignIn = () => {
           <div className="flex gap-1 my-1">
             <button
               onClick={() => handleTestLogin("admin")}
-              className="btn btn-xs btn-primary w-[70px]"
+              className="btn btn-xs shadow-sm w-[70px]"
             >
               Admin
             </button>
             <button
               onClick={() => handleTestLogin("deliveryman")}
-              className="btn btn-xs btn-primary w-[72px]"
+              className="btn btn-xs shadow-sm w-[72px]"
             >
               Deliveryman
             </button>
             <button
               onClick={() => handleTestLogin("user")}
-              className="btn btn-xs btn-primary w-[70px]"
+              className="btn btn-xs shadow-sm w-[70px]"
             >
               User
             </button>

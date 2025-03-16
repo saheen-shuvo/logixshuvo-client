@@ -17,7 +17,7 @@ const AllDeliveryMan = () => {
   return (
     <div>
       <h2 className="text-3xl font-bold my-4 text-center">
-        ALL BOOKED PARCELS
+        ALL DELIVERY MAN
       </h2>
       {/* TABLE */}
       {isLoading ? (
