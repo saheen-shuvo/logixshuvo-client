@@ -28,18 +28,18 @@ const AllDeliveryMan = () => {
         <div className="overflow-x-auto">
           <table className="table w-full">
             {/* head */}
-            <thead>
+            <thead className="text-xs">
               <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Phone Number</th>
-                <th>Parcel Delivered</th>
-                <th>Average Rating</th>
+                <th>Phone</th>
+                <th>Delivered</th>
+                <th>Rating</th>
               </tr>
             </thead>
             <tbody>
               {deliveryman.map((user, index) => (
-                <tr>
+                <tr className="text-xs">
                   <th>{index + 1}</th>
                   <td className="font-semibold">{user.name}</td>
                   <td className="font-semibold">{user.phone}</td>

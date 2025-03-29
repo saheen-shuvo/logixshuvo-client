@@ -15,8 +15,8 @@ const AverageRating = ({ deliveryManId }) => {
     queryFn: () => fetchAverageRating(deliveryManId, axiosSecure),
     enabled: !!deliveryManId,
   });
-  if (isLoading) return <span>Loading...</span>;
-  return <span className="flex items-center gap-1">{averageRating ? averageRating.toFixed(2) : "No Reviews"}<FaStarHalfAlt /></span>;
+  if (isLoading) return <span>...</span>;
+  return <span className="flex items-center gap-1">{averageRating ? averageRating.toFixed(2) : "0.0"}<FaStarHalfAlt /></span>;
 };
 
 export default AverageRating;

@@ -111,18 +111,18 @@ const AllUsers = () => {
           <table className="table w-full">
             {/* head */}
             <thead>
-              <tr>
+              <tr className="text-xs">
                 <th>#</th>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>Parcels Booked</th>
+                <th>Booked</th>
                 <th>Role</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user, index) => (
-                <tr>
+                <tr className="text-xs">
                   <th>{index + 1}</th>
                   <td className="font-semibold">{user.name}</td>
                   <td className="font-semibold">

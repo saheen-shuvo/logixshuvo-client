@@ -3,7 +3,7 @@ import { FiHome } from "react-icons/fi";
 import { IoLogoDropbox, IoMdListBox } from "react-icons/io";
 import { IoStatsChart } from "react-icons/io5";
 import { PiUsersFourFill } from "react-icons/pi";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useDeliveryMan from "../hooks/useDeliveryMan";
 import { FaBoxesPacking } from "react-icons/fa6";
@@ -27,20 +27,25 @@ const Dashboard = () => {
 
   return (
     <div className="flex">
-      <aside className={`h-screen shadow-md transition-all duration-300 ${
+      <aside
+        className={`h-screen shadow-md transition-all duration-300 ${
           expanded ? "w-48" : "w-14"
-        }`}>
+        }`}
+      >
         <nav className="h-full flex flex-col border-r border-gray-400 shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
-            <p
-              className={`text-sm md:text-[17px] font-bold  flex items-center overflow-hidden transition-all ${
-                expanded ? "w-32" : "w-0"
-              }`}
-            >
+            <Link to='/'>
               {" "}
-              <img className="w-7" src={logo} alt="" />
-              Logi<span className="text-[#ff6a00]">X</span>Shuvo
-            </p>
+              <p
+                className={`text-sm md:text-[17px] font-bold  flex items-center overflow-hidden transition-all ${
+                  expanded ? "w-32" : "w-0"
+                }`}
+              >
+                {" "}
+                <img className="w-7" src={logo} alt="" />
+                Logi<span className="text-[#ff6a00]">X</span>Shuvo
+              </p>
+            </Link>
             <button
               onClick={() => setExpanded((curr) => !curr)}
               className="btn btn-xs font-semibold"
@@ -55,6 +60,19 @@ const Dashboard = () => {
           <ul className="menu w-full font-semibold flex flex-col gap-4 flex-1">
             {isAdmin && (
               <>
+                <li>
+                  <NavLink to="/dashboard/statistics">
+                    <IoStatsChart />
+                    <span
+                      className={`overflow-hidden transition-all ${
+                        expanded ? "w-32" : "w-0"
+                      }`}
+                    >
+                      Statistics
+                    </span>
+                  </NavLink>
+                </li>
+
                 <li>
                   <NavLink to="/dashboard/allparcels">
                     <IoLogoDropbox />
@@ -90,19 +108,6 @@ const Dashboard = () => {
                       }`}
                     >
                       All Delivery Man
-                    </span>
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink to="/dashboard/statistics">
-                    <IoStatsChart />
-                    <span
-                      className={`overflow-hidden transition-all ${
-                        expanded ? "w-32" : "w-0"
-                      }`}
-                    >
-                      Statistics
                     </span>
                   </NavLink>
                 </li>
@@ -202,7 +207,7 @@ const Dashboard = () => {
       </aside>
 
       {/* DASHBOARD CONTENT */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-2 lg:p-8">
         <Outlet></Outlet>
       </div>
     </div>
