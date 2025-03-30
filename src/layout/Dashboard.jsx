@@ -27,14 +27,15 @@ const Dashboard = () => {
 
   return (
     <div className="flex">
+      {/* SIDE BAR FOR LARGE SCREE*/}
       <aside
-        className={`h-screen shadow-md transition-all duration-300 ${
+        className={`h-screen shadow-md transition-all duration-300 hidden lg:block ${
           expanded ? "w-48" : "w-14"
         }`}
       >
         <nav className="h-full flex flex-col border-r border-gray-400 shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
-            <Link to='/'>
+            <Link to="/">
               {" "}
               <p
                 className={`text-sm md:text-[17px] font-bold  flex items-center overflow-hidden transition-all ${
@@ -208,6 +209,115 @@ const Dashboard = () => {
 
       {/* DASHBOARD CONTENT */}
       <div className="flex-1 p-2 lg:p-8">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              {isAdmin && (
+                <>
+                  <li>
+                    <NavLink to="/dashboard/statistics">
+                      <IoStatsChart />
+                        Statistics
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/allparcels">
+                      <IoLogoDropbox />
+                        All Parcels
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/allusers">
+                      <FaUsers></FaUsers>
+                        All Users
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/alldeliveryman">
+                      <PiUsersFourFill />
+                        All Delivery Man
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {isDeliveryMan && (
+                <>
+                  <li>
+                    <NavLink to="/dashboard/mydeliverylist">
+                      <FaClipboardList />
+                        My Delivery List
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/myreviews">
+                      <MdReviews />
+                        My Reviews
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {!isAdmin && !isDeliveryMan && (
+                <>
+                  <li>
+                    <NavLink to="/dashboard/bookparcel">
+                      <FaBoxesPacking />
+                        Book a Parcel
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/myparcels">
+                      <IoMdListBox />
+                        My Parcels
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              <div className="divider"></div>
+
+              {/* SHARED NAV LINKS */}
+              <li>
+                <NavLink to="/dashboard/myprofile">
+                  <FaUserCircle />
+                    My Profile
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/">
+                  <FiHome />
+                    Home
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        </div>
         <Outlet></Outlet>
       </div>
     </div>

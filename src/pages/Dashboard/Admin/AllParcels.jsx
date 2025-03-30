@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-undef */
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
@@ -8,7 +10,11 @@ const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
 
   // Fetch booked parcels
-  const { data: bookedParcels = [], refetch } = useQuery({
+  const {
+    data: bookedParcels = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["bookedParcels"],
     queryFn: async () => {
       const res = await axiosSecure.get("/bookedParcels");
@@ -52,7 +58,7 @@ const AllParcels = () => {
 
   const handleAssignDelivery = () => {
     if (!selectedParcel || !selectedDeliveryman || !deliveryDate) {
-      toast.warn("Please Select Delivery Man and Delivery Date!")
+      toast.warn("Please Select Delivery Man and Delivery Date!");
       return;
     }
     updateParcelMutation.mutate({
@@ -73,74 +79,170 @@ const AllParcels = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold my-4 text-center">
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center">
         ALL BOOKED PARCELS
       </h2>
       {/* Search Filters */}
-      <div className="flex flex-wrap gap-2 items-center mb-4">
-        <label>From:</label>
+      <div className="flex my-8 gap-1 md:gap-2 items-center">
+        <label className="text-sm font-semibold">From:</label>
         <input
           type="date"
           value={fromDate}
           onChange={(e) => setFromDate(e.target.value)}
-          className="border p-2 rounded"
+          className="border border-gray-300 p-2 rounded w-[120px] text-sm"
         />
 
-        <label>To:</label>
+        <label className="text-sm font-semibold">To:</label>
         <input
           type="date"
           value={toDate}
           onChange={(e) => setToDate(e.target.value)}
-          className="border p-2 rounded"
+          className="border border-gray-300 p-2 w-[120px] text-sm rounded"
         />
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="border-collapse border w-full min-w-max">
-          <thead>
-            <tr className="bg-base-300 text-sm md:text-base">
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Phone</th>
-              <th className="border p-2">Booked</th>
-              <th className="border p-2">Requested</th>
-              <th className="border p-2">Cost</th>
-              <th className="border p-2">Status</th>
-              <th className="border p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredParcels.map((parcel) => (
-              <tr key={parcel._id} className="border text-xs md:text-sm">
-                <td className="border p-2">{parcel.name}</td>
-                <td className="border p-2">{parcel.phone}</td>
-                <td className="border p-2">
-                  {parcel.bookingDate?.split("T")[0]}
-                </td>
-                <td className="border p-2">{parcel.deliveryDate}</td>
-                <td className="border p-2">{parcel.deliveryCharge}</td>
-                <td className="border p-2">{parcel.deliveryStatus}</td>
-                <td className="border p-2">
-                  <button
-                    onClick={() => {
-                      setSelectedParcel(parcel);
-                      document.getElementById("manage_modal").showModal();
-                    }}
-                    className="bg-blue-500 text-white px-2 py-1 rounded"
-                  >
-                    Manage
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div>
+        {/* TABLE */}
+        {isLoading ? (
+          <div className="flex justify-center items-center mt-28">
+            <span className="loading loading-bars loading-lg"></span>
+          </div>
+        ) : (
+          <>
+            {/* FOR LARGE SCREEN */}
+            <div className="overflow-x-auto hidden lg:block">
+              <table className="table w-full">
+                {/* head */}
+                <thead>
+                  <tr className="text-xs">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Booked</th>
+                    <th>Requested</th>
+                    <th>Cost</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredParcels.map((parcel, index) => (
+                    <tr className="text-xs">
+                      <td>{index + 1}</td>
+                      <td className="font-semibold">{parcel.name}</td>
+                      <td className="font-semibold">{parcel.phone}</td>
+                      <td className="font-semibold">
+                        {parcel.bookingDate?.split("T")[0]}
+                      </td>
+                      <td>{parcel.deliveryDate}</td>
+                      <td>{parcel.deliveryCharge}</td>
+                      <td className="uppercase">{parcel.deliveryStatus}</td>
+                      <td>
+                        {parcel.deliveryStatus === "pending" ? (
+                          <>
+                            <button
+                              onClick={() => {
+                                setSelectedParcel(parcel);
+                                document
+                                  .getElementById("manage_modal")
+                                  .showModal();
+                              }}
+                              className="btn btn-sm bg-green-500 text-white px-2 py-1 rounded"
+                            >
+                              Manage
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className=" text-white px-2 py-1 rounded btn btn-sm"
+                              disabled
+                            >
+                              Manage
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* FOR SMALL SCREEN */}
+            <div className="overflow-x-auto block md:hidden">
+              {filteredParcels.map((parcel, index) => (
+                <table className="table table-zebra mb-4 border-2 border-gray-200 shadow-sm">
+                  <tbody>
+                    <tr>
+                      <th>Serial</th>
+                      <td>{index + 1}</td>
+                    </tr>
+                    <tr>
+                      <th>Name</th>
+                      <td>{parcel.name}</td>
+                    </tr>
+                    <tr>
+                      <th>Phone</th>
+                      <td>{parcel.phone}</td>
+                    </tr>
+                    <tr>
+                      <th>Booked</th>
+                      <td>{parcel.bookingDate?.split("T")[0]}</td>
+                    </tr>
+                    <tr>
+                      <th>Requested</th>
+                      <td>{parcel.deliveryDate}</td>
+                    </tr>
+                    <tr>
+                      <th>Cost</th>
+                      <td>{parcel.deliveryCharge}</td>
+                    </tr>
+                    <tr>
+                      <th>Status</th>
+                      <td>{parcel.deliveryStatus}</td>
+                    </tr>
+                    <tr>
+                      <th>Action</th>
+                      <td>
+                        {parcel.deliveryStatus === "pending" ? (
+                          <>
+                            <button
+                              onClick={() => {
+                                setSelectedParcel(parcel);
+                                document
+                                  .getElementById("manage_modal")
+                                  .showModal();
+                              }}
+                              className="bg-green-500 text-white px-2 py-1 rounded btn btn-sm"
+                            >
+                              Manage
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className=" text-white px-2 py-1 rounded btn btn-sm"
+                              disabled
+                            >
+                              Manage
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Modal */}
       {selectedParcel && (
         <dialog id="manage_modal" className="modal open">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Assign Delivery</h3>
+            <h3 className="font-bold text-lg">Assign Delivery Man</h3>
             <p>
               <strong>Parcel:</strong> {selectedParcel.name}
             </p>
@@ -148,12 +250,12 @@ const AllParcels = () => {
               <strong>Phone:</strong> {selectedParcel.phone}
             </p>
             <p>
-              <strong>Current Status:</strong> {selectedParcel.deliveryStatus}
+              <strong>Current Status:</strong> <span className="uppercase">{selectedParcel.deliveryStatus}</span>
             </p>
 
             <label className="block mt-3">Select Deliveryman:</label>
             <select
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded border-gray-400"
               value={selectedDeliveryman}
               onChange={(e) => setSelectedDeliveryman(e.target.value)}
             >
@@ -168,21 +270,21 @@ const AllParcels = () => {
             <label className="block mt-3">Delivery Date:</label>
             <input
               type="date"
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-400 p-2 rounded"
               value={deliveryDate}
               onChange={(e) => setDeliveryDate(e.target.value)}
             />
 
             <button
               onClick={handleAssignDelivery}
-              className="bg-green-500 text-white px-3 py-2 rounded mt-4 w-full"
+              className="bg-green-500 text-white px-3 py-2 rounded mt-4 w-full btn"
             >
-              Assign Delivery
+              Assign
             </button>
 
             <button
               onClick={() => setSelectedParcel(null)}
-              className="bg-red-500 text-white px-3 py-2 rounded mt-2 w-full"
+              className="bg-red-500 text-white px-3 py-2 rounded mt-2 w-full btn"
             >
               Close
             </button>
