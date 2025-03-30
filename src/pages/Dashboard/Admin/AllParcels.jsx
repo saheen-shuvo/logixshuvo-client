@@ -5,6 +5,8 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import Lottie from "lottie-react";
+import LoadingAnimation from '../../../../public/Loading Animation.json'
 
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
@@ -104,8 +106,12 @@ const AllParcels = () => {
       <div>
         {/* TABLE */}
         {isLoading ? (
-          <div className="flex justify-center items-center mt-28">
-            <span className="loading loading-bars loading-lg"></span>
+          <div className="flex justify-center items-center my-16">
+            <Lottie
+              animationData={LoadingAnimation}
+              loop={true}
+              className="w-24 h-24"
+            />
           </div>
         ) : (
           <>
@@ -250,7 +256,8 @@ const AllParcels = () => {
               <strong>Phone:</strong> {selectedParcel.phone}
             </p>
             <p>
-              <strong>Current Status:</strong> <span className="uppercase">{selectedParcel.deliveryStatus}</span>
+              <strong>Current Status:</strong>{" "}
+              <span className="uppercase">{selectedParcel.deliveryStatus}</span>
             </p>
 
             <label className="block mt-3">Select Deliveryman:</label>

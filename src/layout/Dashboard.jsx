@@ -11,6 +11,8 @@ import { MdReviews } from "react-icons/md";
 import { LuChevronFirst, LuChevronLast } from "react-icons/lu";
 import { useState } from "react";
 import logo from "../assets/image/logo.svg";
+import Lottie from "lottie-react";
+import loadingAnimation from '../.././public/Loading Animation.json'
 
 const Dashboard = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
@@ -19,8 +21,12 @@ const Dashboard = () => {
 
   if (isAdminLoading || isDeliveryManLoading) {
     return (
-      <div className="flex justify-center items-center mt-28">
-        <span className="loading loading-bars loading-lg"></span>
+      <div className="flex justify-center items-center min-h-screen">
+        <Lottie
+          animationData={loadingAnimation}
+          loop={true}
+          className="w-24 h-24"
+        />
       </div>
     );
   }
@@ -29,8 +35,8 @@ const Dashboard = () => {
     <div className="flex">
       {/* SIDE BAR FOR LARGE SCREE*/}
       <aside
-        className={`h-screen shadow-md transition-all duration-300 hidden lg:block ${
-          expanded ? "w-48" : "w-14"
+        className={`min-h-screen shadow-md transition-all duration-300 hidden lg:block text-white ${
+          expanded ? "w-48 bg-[#0077B6]" : "w-14 bg-[#0077B6]"
         }`}
       >
         <nav className="h-full flex flex-col border-r border-gray-400 shadow-sm">
@@ -49,7 +55,7 @@ const Dashboard = () => {
             </Link>
             <button
               onClick={() => setExpanded((curr) => !curr)}
-              className="btn btn-xs font-semibold"
+              className="btn bg-[#ff6a00] text-white font-bold btn-xs shadow border-0"
             >
               {expanded ? (
                 <LuChevronFirst></LuChevronFirst>
@@ -236,28 +242,28 @@ const Dashboard = () => {
                   <li>
                     <NavLink to="/dashboard/statistics">
                       <IoStatsChart />
-                        Statistics
+                      Statistics
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink to="/dashboard/allparcels">
                       <IoLogoDropbox />
-                        All Parcels
+                      All Parcels
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink to="/dashboard/allusers">
                       <FaUsers></FaUsers>
-                        All Users
+                      All Users
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink to="/dashboard/alldeliveryman">
                       <PiUsersFourFill />
-                        All Delivery Man
+                      All Delivery Man
                     </NavLink>
                   </li>
                 </>
@@ -268,14 +274,14 @@ const Dashboard = () => {
                   <li>
                     <NavLink to="/dashboard/mydeliverylist">
                       <FaClipboardList />
-                        My Delivery List
+                      My Delivery List
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink to="/dashboard/myreviews">
                       <MdReviews />
-                        My Reviews
+                      My Reviews
                     </NavLink>
                   </li>
                 </>
@@ -286,14 +292,14 @@ const Dashboard = () => {
                   <li>
                     <NavLink to="/dashboard/bookparcel">
                       <FaBoxesPacking />
-                        Book a Parcel
+                      Book a Parcel
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink to="/dashboard/myparcels">
                       <IoMdListBox />
-                        My Parcels
+                      My Parcels
                     </NavLink>
                   </li>
                 </>
@@ -305,14 +311,14 @@ const Dashboard = () => {
               <li>
                 <NavLink to="/dashboard/myprofile">
                   <FaUserCircle />
-                    My Profile
+                  My Profile
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/">
                   <FiHome />
-                    Home
+                  Home
                 </NavLink>
               </li>
             </ul>

@@ -4,6 +4,8 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import Lottie from "lottie-react";
+import loadingAnimation from "../../../../public/Loading Animation.json";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -98,72 +100,147 @@ const AllUsers = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold my-4 text-center">
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
         ALL REGISTERED USERS
       </h2>
       {/* TABLE */}
       {isLoading ? (
-        <div className="flex justify-center items-center mt-28">
-          <span className="loading loading-bars loading-lg"></span>
+        <div className="flex justify-center items-center my-16">
+          <Lottie
+            animationData={loadingAnimation}
+            loop={true}
+            className="w-24 h-24"
+          />
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table w-full">
-            {/* head */}
-            <thead>
-              <tr className="text-xs">
-                <th>#</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Booked</th>
-                <th>Role</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user, index) => (
+        <>
+          {/* FOR LARGE SCREEN */}
+          <div className="overflow-x-auto hidden lg:block">
+            <table className="table w-full">
+              {/* head */}
+              <thead>
                 <tr className="text-xs">
-                  <th>{index + 1}</th>
-                  <td className="font-semibold">{user.name}</td>
-                  <td className="font-semibold">
-                    {bookedParcels.find((parcel) => parcel.email === user.email)
-                      ?.phone ||
-                      user.phone ||
-                      "N/A"}
-                  </td>
-                  <td className="font-semibold">
-                    {
-                      bookedParcels.filter(
-                        (parcel) => parcel.email === user.email
-                      ).length
-                    }
-                  </td>
-                  <th>
-                    <button
-                      onClick={() => {
-                        setSelectedUser(user);
-                        document.getElementById("role_modal").showModal();
-                      }}
-                      className="btn btn-primary w-20 btn-xs"
-                    >
-                      {user.role}
-                    </button>
-                  </th>
-                  <th>
-                    <button
-                      onClick={() => handleDeleteUser(user)}
-                      className="text-3xl text-red-600"
-                    >
-                      <MdDeleteForever />
-                    </button>
-                  </th>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Booked</th>
+                  <th>Role</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {users.map((user, index) => (
+                  <tr className="text-xs">
+                    <th>{index + 1}</th>
+                    <td className="font-semibold">{user.name}</td>
+                    <td className="font-semibold">
+                      {bookedParcels.find(
+                        (parcel) => parcel.email === user.email
+                      )?.phone ||
+                        user.phone ||
+                        "N/A"}
+                    </td>
+                    <td className="font-semibold">
+                      {
+                        bookedParcels.filter(
+                          (parcel) => parcel.email === user.email
+                        ).length
+                      }
+                    </td>
+                    <th>
+                      <button
+                        onClick={() => {
+                          setSelectedUser(user);
+                          document.getElementById("role_modal").showModal();
+                        }}
+                        className="btn bg-[#ff6a00] text-white uppercase w-[85px] btn-xs"
+                      >
+                        {user.role}
+                      </button>
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => handleDeleteUser(user)}
+                        className="text-3xl text-red-600"
+                      >
+                        <MdDeleteForever />
+                      </button>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* FOR SMALL SCREEN */}
+          <div className="overflow-x-auto block md:hidden">
+            {users.map((user, index) => (
+              <table className="table table-zebra mb-4 border-2 border-gray-200 shadow-sm">
+                <tbody>
+                  <tr>
+                    <th>Serial</th>
+                    <td>{index + 1}</td>
+                  </tr>
+                  <tr>
+                    <th>Name</th>
+                    <td>{user.name}</td>
+                  </tr>
+                  <tr>
+                    <th>Phone</th>
+                    <td>
+                      {" "}
+                      {bookedParcels.find(
+                        (parcel) => parcel.email === user.email
+                      )?.phone ||
+                        user.phone ||
+                        "N/A"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Booked</th>
+                    <td>
+                      {" "}
+                      {
+                        bookedParcels.filter(
+                          (parcel) => parcel.email === user.email
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Role</th>
+                    <td>
+                      {" "}
+                      <button
+                        onClick={() => {
+                          setSelectedUser(user);
+                          document.getElementById("role_modal").showModal();
+                        }}
+                        className="btn bg-[#ff6a00] text-white uppercase w-[85px] btn-xs"
+                      >
+                        {user.role}
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Action</th>
+                    <td>
+                      {" "}
+                      <button
+                        onClick={() => handleDeleteUser(user)}
+                        className="text-3xl text-red-600"
+                      >
+                        <MdDeleteForever />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            ))}
+          </div>
+        </>
       )}
-      <dialog id="role_modal" className="modal modal-bottom sm:modal-middle">
+      <dialog id="role_modal" className="modal modal-middle">
         <div className="modal-box">
           {selectedUser && (
             <>
@@ -176,7 +253,7 @@ const AllUsers = () => {
                     handleRoleChange(selectedUser._id, "admin");
                     document.getElementById("role_modal").close();
                   }}
-                  className="btn btn-primary"
+                  className="btn bg-red-500 text-white"
                 >
                   Admin
                 </button>
@@ -185,7 +262,7 @@ const AllUsers = () => {
                     handleRoleChange(selectedUser._id, "deliveryman");
                     document.getElementById("role_modal").close();
                   }}
-                  className="btn btn-primary"
+                  className="btn bg-green-700 text-white"
                 >
                   Delivery Man
                 </button>
