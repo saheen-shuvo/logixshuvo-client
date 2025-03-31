@@ -7,8 +7,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useDeliveryMan from "../hooks/useDeliveryMan";
 import { FaBoxesPacking } from "react-icons/fa6";
-import { MdReviews } from "react-icons/md";
-import { LuChevronFirst, LuChevronLast } from "react-icons/lu";
+import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight, MdReviews } from "react-icons/md";
 import { useState } from "react";
 import logo from "../assets/image/logo.svg";
 import Lottie from "lottie-react";
@@ -58,9 +57,9 @@ const Dashboard = () => {
               className="btn bg-[#ff6a00] text-white font-bold btn-xs shadow border-0"
             >
               {expanded ? (
-                <LuChevronFirst></LuChevronFirst>
+                <MdOutlineKeyboardDoubleArrowRight />
               ) : (
-                <LuChevronLast></LuChevronLast>
+                <MdOutlineKeyboardDoubleArrowLeft />
               )}
             </button>
           </div>

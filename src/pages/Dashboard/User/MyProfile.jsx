@@ -55,43 +55,65 @@ const MyProfile = () => {
 
   return (
     <div>
-      <div>
-        <h1 className="text-2xl font-bold text-center my-4">MY PROFILE</h1>
-      </div>
-      {/* DETAILS */}
-      <div>
-        {/* img */}
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
+        ALL REGISTERED USERS
+      </h2>
+      <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-md mt-0 lg:mt-8">
+        {/* Profile Image */}
         <div className="flex justify-center mt-4">
           <img
-            className="w-16 h-16 object-cover rounded-full"
-            src={user?.photoURL}
-            alt=""
+            className="w-32 h-32 object-cover rounded-full border-4 border-[#ff6a00] shadow-lg"
+            src={imageUrl || "/default-avatar.png"}
+            alt="Profile"
           />
         </div>
-        <h6 className="font-semibold text-lg text-yellow-500 text-center">
-          {user?.displayName}
-        </h6>
-      </div>
-      <div className="flex flex-col gap-2 font-semibold">
-        <p className="mt-4">Email: {user?.email}</p>
-        <p className="">
-          Phone: {user?.phoneNumber ? user?.phoneNumber : "Not Provided"}
-        </p>
-        <p className="">Account Created: {user?.metadata.creationTime}</p>
-        <p className="">Last Login: {user?.metadata.lastSignInTime}</p>
-        <p className="">
-          Email Verified: {user?.metadata.emailVerified ? "Yes" : "No"}
-        </p>
-        <p className="">Update Profile Picture :</p>
-        {/* File input for uploading new profile image */}
-        <div className="mt-4">
-          <input
-            type="file"
-            className="file-input file-input-bordered w-full max-w-xs"
-            accept="image/*"
-            onChange={handleFileChange}
-            disabled={loading}
-          />
+
+        {/* Display User Info */}
+        <div className="text-center mt-4">
+          <h6 className="text-xl font-semibold text-gray-900">
+            {user?.displayName}
+          </h6>
+          <p className="text-gray-600">{user?.email}</p>
+        </div>
+
+        {/* Account Details */}
+        <div className="mt-6 space-y-4">
+          <div className="flex justify-between text-gray-700 font-medium">
+            <span>Phone:</span>
+            <span>{user?.phoneNumber || "Not Provided"}</span>
+          </div>
+          <div className="flex justify-between text-gray-700 font-medium">
+            <span>Account Created:</span>
+            <span>
+              {new Date(user?.metadata.creationTime).toLocaleDateString()}
+            </span>
+          </div>
+          <div className="flex justify-between text-gray-700 font-medium">
+            <span>Last Login:</span>
+            <span>
+              {new Date(user?.metadata.lastSignInTime).toLocaleDateString()}
+            </span>
+          </div>
+          <div className="flex justify-between text-gray-700 font-medium">
+            <span>Email Verified:</span>
+            <span>{user?.metadata.emailVerified ? "Yes" : "No"}</span>
+          </div>
+        </div>
+
+        {/* Update Profile Picture */}
+        <div className="mt-6">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Update Profile Picture:
+          </label>
+          <div className="flex justify-center">
+            <input
+              type="file"
+              className="file-input file-input-bordered w-full max-w-xs border-gray-300 focus:border-indigo-600"
+              accept="image/*"
+              onChange={handleFileChange}
+              disabled={loading}
+            />
+          </div>
           {loading && (
             <p className="mt-2 text-center text-yellow-500">Uploading...</p>
           )}

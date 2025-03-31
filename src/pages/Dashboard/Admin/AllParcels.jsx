@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key */
-/* eslint-disable no-undef */
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
@@ -134,16 +133,16 @@ const AllParcels = () => {
                 <tbody>
                   {filteredParcels.map((parcel, index) => (
                     <tr className="text-xs">
-                      <td>{index + 1}</td>
+                      <td className="font-semibold">{index + 1}</td>
                       <td className="font-semibold">{parcel.name}</td>
                       <td className="font-semibold">{parcel.phone}</td>
                       <td className="font-semibold">
                         {parcel.bookingDate?.split("T")[0]}
                       </td>
-                      <td>{parcel.deliveryDate}</td>
-                      <td>{parcel.deliveryCharge}</td>
-                      <td className="uppercase">{parcel.deliveryStatus}</td>
-                      <td>
+                      <td className="font-semibold">{parcel.deliveryDate}</td>
+                      <td className="font-semibold">{parcel.deliveryCharge}</td>
+                      <td className="uppercase font-semibold">{parcel.deliveryStatus}</td>
+                      <td className="font-semibold">
                         {parcel.deliveryStatus === "pending" ? (
                           <>
                             <button
@@ -180,36 +179,36 @@ const AllParcels = () => {
                 <table className="table table-zebra mb-4 border-2 border-gray-200 shadow-sm">
                   <tbody>
                     <tr>
-                      <th>Serial</th>
-                      <td>{index + 1}</td>
+                      <th >Serial</th>
+                      <td className="font-semibold">{index + 1}</td>
                     </tr>
                     <tr>
                       <th>Name</th>
-                      <td>{parcel.name}</td>
+                      <td className="font-semibold">{parcel.name}</td>
                     </tr>
                     <tr>
                       <th>Phone</th>
-                      <td>{parcel.phone}</td>
+                      <td className="font-semibold">{parcel.phone}</td>
                     </tr>
                     <tr>
                       <th>Booked</th>
-                      <td>{parcel.bookingDate?.split("T")[0]}</td>
+                      <td className="font-semibold">{parcel.bookingDate?.split("T")[0]}</td>
                     </tr>
                     <tr>
                       <th>Requested</th>
-                      <td>{parcel.deliveryDate}</td>
+                      <td className="font-semibold">{parcel.deliveryDate}</td>
                     </tr>
                     <tr>
                       <th>Cost</th>
-                      <td>{parcel.deliveryCharge}</td>
+                      <td className="font-semibold">{parcel.deliveryCharge}</td>
                     </tr>
                     <tr>
                       <th>Status</th>
-                      <td>{parcel.deliveryStatus}</td>
+                      <td className="font-semibold">{parcel.deliveryStatus}</td>
                     </tr>
                     <tr>
                       <th>Action</th>
-                      <td>
+                      <td className="font-semibold">
                         {parcel.deliveryStatus === "pending" ? (
                           <>
                             <button

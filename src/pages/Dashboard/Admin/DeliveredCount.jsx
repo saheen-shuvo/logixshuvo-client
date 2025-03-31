@@ -15,9 +15,9 @@ const DeliveredCount = ({ deliveryManId }) => {
     enabled: !!deliveryManId,
   });
 
-  if (isLoading) return <span>counting...</span>;
+  if (isLoading) return <span>...</span>;
 
-  return <span>{deliveredCount}</span>;
+  return [deliveredCount]
 };
 
 export default DeliveredCount;

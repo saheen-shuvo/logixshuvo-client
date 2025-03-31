@@ -131,7 +131,7 @@ const AllUsers = () => {
               <tbody>
                 {users.map((user, index) => (
                   <tr className="text-xs">
-                    <th>{index + 1}</th>
+                    <th className="font-semibold">{index + 1}</th>
                     <td className="font-semibold">{user.name}</td>
                     <td className="font-semibold">
                       {bookedParcels.find(
@@ -179,15 +179,15 @@ const AllUsers = () => {
                 <tbody>
                   <tr>
                     <th>Serial</th>
-                    <td>{index + 1}</td>
+                    <td className="font-semibold">{index + 1}</td>
                   </tr>
                   <tr>
                     <th>Name</th>
-                    <td>{user.name}</td>
+                    <td className="font-semibold">{user.name}</td>
                   </tr>
                   <tr>
                     <th>Phone</th>
-                    <td>
+                    <td className="font-semibold">
                       {" "}
                       {bookedParcels.find(
                         (parcel) => parcel.email === user.email
@@ -198,7 +198,7 @@ const AllUsers = () => {
                   </tr>
                   <tr>
                     <th>Booked</th>
-                    <td>
+                    <td className="font-semibold">
                       {" "}
                       {
                         bookedParcels.filter(
@@ -209,7 +209,7 @@ const AllUsers = () => {
                   </tr>
                   <tr>
                     <th>Role</th>
-                    <td>
+                    <td className="font-semibold">
                       {" "}
                       <button
                         onClick={() => {

@@ -16,7 +16,7 @@ const AverageRating = ({ deliveryManId }) => {
     enabled: !!deliveryManId,
   });
   if (isLoading) return <span>...</span>;
-  return <span className="flex items-center gap-1">{averageRating ? averageRating.toFixed(2) : "0.0"}<FaStarHalfAlt /></span>;
+  return <span className="flex items-center gap-1">{averageRating !== undefined && averageRating !== null ? averageRating.toFixed(2) : "0.0"}<FaStarHalfAlt /></span>;
 };
 
 export default AverageRating;
