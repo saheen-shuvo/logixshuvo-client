@@ -9,7 +9,6 @@ import useUserRole from "../hooks/useUserRole";
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
   const userRole = useUserRole();
-  console.log(userRole);
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"

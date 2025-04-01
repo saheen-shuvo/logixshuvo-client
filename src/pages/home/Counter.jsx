@@ -43,7 +43,7 @@ const Counter = () => {
             <FaBoxesStacked />
           </div>
           <div className="stat-title font-semibold">Total Parcels Booked</div>
-          <div className="stat-value">
+          <div className="stat-value text-5xl py-4">
             {" "}
             <CountUp start={0} end={bookedParcels.length} delay={0}>
               {({ countUpRef }) => (
@@ -63,7 +63,7 @@ const Counter = () => {
           <div className="stat-title font-semibold">
             Total Parcels Delivered
           </div>
-          <div className="stat-value">
+          <div className="stat-value text-5xl py-4">
             {" "}
             <CountUp start={0} end={deliveredCount} delay={0}>
               {({ countUpRef }) => (
@@ -81,7 +81,7 @@ const Counter = () => {
             <FaUsers />
           </div>
           <div className="stat-title font-semibold">Total Registered Users</div>
-          <div className="stat-value">
+          <div className="stat-value text-5xl py-4">
             {" "}
             <CountUp start={0} end={userCount} delay={0}>
               {({ countUpRef }) => (

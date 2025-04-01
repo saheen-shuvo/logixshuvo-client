@@ -14,6 +14,8 @@ import { LineChart, Line, Tooltip, Legend } from "recharts";
 import useAuth from "../../../hooks/useAuth";
 import { FaCircleDollarToSlot, FaUsers } from "react-icons/fa6";
 import { RiCaravanFill } from "react-icons/ri";
+import Lottie from "lottie-react";
+import LoadingAnimation from '../../../../public/Loading Animation.json';
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 
@@ -63,8 +65,12 @@ const Statistics = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center mt-28">
-        <span className="loading loading-bars loading-lg"></span>
+      <div className="flex justify-center items-center min-h-screen">
+        <Lottie
+          animationData={LoadingAnimation}
+          loop={true}
+          className="w-24 h-24"
+        />
       </div>
     );
   }
@@ -89,16 +95,16 @@ const Statistics = () => {
 
   return (
     <div>
-      <h2 className="text-xl lg:text-3xl mb-4 font-bold uppercase">
+      <h2 className="text-xl lg:text-3xl mb-4 font-bold">
         {" "}
         Hi, Welcome Back {user?.displayName ? user.displayName : "Back"}!
       </h2>
       <div className="stats shadow flex flex-col md:flex-row mt-8">
         <div className="stat">
           <div className="stat-title">Revenue</div>
-          <div className="stat-value flex gap-2">
+          <div className="stat-value text-5xl flex gap-2">
             ${totalRevenue.totalRevenue}
-            <div className="stat-figure text-[#ff6a00] text-2xl">
+            <div className="stat-figure text-[#ff6a00] text-4xl">
               <FaCircleDollarToSlot />
             </div>
           </div>
@@ -106,9 +112,9 @@ const Statistics = () => {
 
         <div className="stat">
           <div className="stat-title">Users</div>
-          <div className="stat-value flex gap-2">
+          <div className="stat-value text-5xl flex gap-2">
             {users.length}
-            <div className="stat-figure text-[#ff6a00] text-3xl">
+            <div className="stat-figure text-[#ff6a00] text-4xl">
               <FaUsers />
             </div>
           </div>
@@ -116,9 +122,9 @@ const Statistics = () => {
 
         <div className="stat">
           <div className="stat-title">Delivery Man</div>
-          <div className="stat-value flex gap-2">
+          <div className="stat-value text-5xl flex gap-2">
             {deliverymanCount}
-            <div className="stat-figure text-[#ff6a00] text-3xl">
+            <div className="stat-figure text-[#ff6a00] text-4xl">
               <FaUsers />
             </div>
           </div>
@@ -126,9 +132,9 @@ const Statistics = () => {
 
         <div className="stat">
           <div className="stat-title">Booked Parcels</div>
-          <div className="stat-value flex items gap-2">
+          <div className="stat-value text-5xl flex items gap-2">
             {bookedParcelCount}
-            <div className="stat-figure text-[#ff6a00] text-3xl">
+            <div className="stat-figure text-[#ff6a00] text-4xl">
               <RiCaravanFill />
             </div>
           </div>

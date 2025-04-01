@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const DeliveredCount = ({ deliveryManId }) => {
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
   const fetchDeliveredCount = async () => {
-    const res = await axiosSecure.get(`/parcelsDelivered/${deliveryManId}`);
+    const res = await axiosPublic.get(`/parcelsDelivered/${deliveryManId}`);
     return res.data.count;
   };
   const { data: deliveredCount, isLoading } = useQuery({
@@ -17,7 +17,7 @@ const DeliveredCount = ({ deliveryManId }) => {
 
   if (isLoading) return <span>...</span>;
 
-  return [deliveredCount]
+  return [deliveredCount];
 };
 
 export default DeliveredCount;
