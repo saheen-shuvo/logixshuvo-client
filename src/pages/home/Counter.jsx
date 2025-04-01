@@ -4,16 +4,18 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { FaBoxesStacked, FaUsers } from "react-icons/fa6";
 import { MdDeliveryDining } from "react-icons/md";
 import { useEffect, useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Counter = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [userCount, setUserCount] = useState(0);
 
   // Fetch booked parcels
   const { data: bookedParcels = [] } = useQuery({
     queryKey: ["bookedParcels"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/bookedParcels");
+      const res = await axiosSecure.get("/bookedParcels");
       return res.data;
     },
   });

@@ -15,7 +15,7 @@ const MyParcels = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://logixshuvo-server.vercel.app/parcels?email=${user.email}`)
+      fetch(`http://localhost:5000/parcels?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setParcels(data);

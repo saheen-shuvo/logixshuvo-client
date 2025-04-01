@@ -29,6 +29,38 @@ const Statistics = () => {
     },
   });
 
+  const { data: totalRevenue = {} } = useQuery({
+    queryKey: ["totalRevenue"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/payments/total-revenue");
+      return res.data;
+    },
+  });
+
+  const { data: deliverymanCount = [] } = useQuery({
+    queryKey: ["deliverymanCount"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users/deliveryman-count");
+      return res.data.length;
+    },
+  });
+
+  const { data: bookedParcelCount = [] } = useQuery({
+    queryKey: ["bookedParcelCount"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/bookedParcels");
+      return res.data.length;
+    },
+  });
+
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      return res.data;
+    },
+  });
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center mt-28">
@@ -36,8 +68,6 @@ const Statistics = () => {
       </div>
     );
   }
-
-  console.log(bookingStatsData);
 
   // Custom shape for the bar chart
   const getPath = (x, y, width, height) => {
@@ -67,7 +97,7 @@ const Statistics = () => {
         <div className="stat">
           <div className="stat-title">Revenue</div>
           <div className="stat-value flex gap-2">
-            $1280{" "}
+            ${totalRevenue.totalRevenue}
             <div className="stat-figure text-[#ff6a00] text-2xl">
               <FaCircleDollarToSlot />
             </div>
@@ -77,7 +107,7 @@ const Statistics = () => {
         <div className="stat">
           <div className="stat-title">Users</div>
           <div className="stat-value flex gap-2">
-            18{" "}
+            {users.length}
             <div className="stat-figure text-[#ff6a00] text-3xl">
               <FaUsers />
             </div>
@@ -87,7 +117,7 @@ const Statistics = () => {
         <div className="stat">
           <div className="stat-title">Delivery Man</div>
           <div className="stat-value flex gap-2">
-            6{" "}
+            {deliverymanCount}
             <div className="stat-figure text-[#ff6a00] text-3xl">
               <FaUsers />
             </div>
@@ -97,7 +127,7 @@ const Statistics = () => {
         <div className="stat">
           <div className="stat-title">Booked Parcels</div>
           <div className="stat-value flex items gap-2">
-            48{" "}
+            {bookedParcelCount}
             <div className="stat-figure text-[#ff6a00] text-3xl">
               <RiCaravanFill />
             </div>
