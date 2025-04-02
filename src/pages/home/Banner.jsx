@@ -1,8 +1,8 @@
-import bannerImg from "../../assets/image/10957651.jpg";
+import bannerImg from "../../assets/image/banner.png";
 const Banner = () => {
   return (
     <div className=" relative bg-black">
-      <img className="opacity-80" src={bannerImg} alt="" />
+      <img className="pt-16 lg:pt-0" src={bannerImg} alt="" />
       {/* Search bar */}
       {/* <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-[87px] lg:top-28 left-1/2">
         <label className="input opacity-70 input-bordered flex items-center gap-2 p-1 lg:p-3 text-sm h-8 lg:h-12">
@@ -21,10 +21,6 @@ const Banner = () => {
           </svg>
         </label>
       </div> */}
-      {/* Heading Text */}
-      <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full">
-      <h2 className="text-center font-bold uppercase text-xs lg:text-5xl w-full pt-6 lg:pt-0">From Delivery to Doorstep<br></br> LogiXShuvo Has You Covered</h2>
-      </div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import AuthContext from "../../context/AuthContext/AuthContext";
 import SocialLogin from "../../shared/SocialLogin";
 import authImg from "../../assets/image/authentication.gif";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { GoSignIn } from "react-icons/go";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic();
@@ -91,7 +92,7 @@ const Register = () => {
   return (
     <div className="auth-bg hero min-h-screen flex flex-col-reverse lg:flex-row lg:gap-28 items-center justify-center p-4">
       {/* Form Section */}
-      <div className="card w-full max-w-sm lg:w-[70%] shadow-2xl p-6 my-8 lg:my-20 bg-base-300">
+      <div className="card w-full max-w-sm lg:w-[70%] shadow-lg p-6 mt-8 lg:mt-20 bg-base-200">
         <h1 className="text-center text-2xl font-bold">Register Here!</h1>
         <form onSubmit={handleRegister} className="card-body space-y-4">
           <div className="form-control">
@@ -184,7 +185,7 @@ const Register = () => {
             </label>
           </div>
           <div className="form-control mt-2">
-            <button className="btn btn-primary w-full">Sign up</button>
+            <button className="btn bg-[#8c87d7] border-0 text-white border-b-4 border-[#0076b6af] w-full">Sign up <GoSignIn /></button>
           </div>
           <div className="divider my-0">OR</div>
           <div className="flex justify-center">

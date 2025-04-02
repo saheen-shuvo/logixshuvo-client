@@ -13,7 +13,6 @@ const TopDeliveryMan = () => {
       return res.data;
     }
   });
-  console.log(topDeliverymen)
 
   return (
     <div className="mt-8 lg:mt-16 max-w-screen-xl mx-auto">
@@ -31,7 +30,7 @@ const TopDeliveryMan = () => {
             <img
               src="https://i.ibb.co.com/5XHSxH9p/dm-1.jpg"
               alt="Shoes"
-              className="rounded-full w-52 h-52 object-cover"
+              className="rounded-full w-52 h-52 object-cover shadow-md"
             />
           </figure>
           <div className="card-body items-center text-center">
@@ -51,7 +50,7 @@ const TopDeliveryMan = () => {
             <img
               src="https://i.ibb.co.com/PZqjCXCS/dm-2.jpg"
               alt="Shoes"
-              className="rounded-full w-52 h-52 object-cover"
+              className="rounded-full w-52 h-52 object-cover shadow-md" 
             />
           </figure>
           <div className="card-body items-center text-center">
@@ -71,7 +70,7 @@ const TopDeliveryMan = () => {
             <img
               src="https://i.ibb.co.com/zHGzZHxT/dm-3.jpg"
               alt="Shoes"
-              className="rounded-full w-52 h-52 object-cover"
+              className="rounded-full w-52 h-52 object-cover shadow-md"
             />
           </figure>
           <div className="card-body items-center text-center">

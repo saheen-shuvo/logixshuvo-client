@@ -61,7 +61,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed z-10 navbar  bg-[#0077B6] flex justify-center">
+    <div className="fixed z-10 navbar  bg-[#0076b6af] flex justify-center">
       <div className="navbar z-10 fixed max-w-screen-xl">
         <div className="navbar-start">
           <div className="dropdown">
@@ -122,7 +122,7 @@ const Navbar = () => {
                   </h3>
                   <p>
                     <NavLink
-                      className="p-2 mt-2 font-semibold btn btn-primary w-full"
+                      className="p-2 mt-2 font-semibold btn bg-[#8c87d7] border-0 text-white border-b-4 border-[#0076b6af] w-full"
                       to={staticDashboardRoute}
                     >
                       Dashboard
@@ -130,7 +130,7 @@ const Navbar = () => {
                   </p>
                   <button
                     onClick={handleSignOut}
-                    className="btn btn-outline flex items-center gap-2 w-28 my-2"
+                    className="btn bg-[#c5a162] border-0 text-white border-b-4 border-[#0076b6af] flex items-center gap-2 w-28 my-2"
                   >
                     <MdLogout /> <span>Log out</span>
                   </button>

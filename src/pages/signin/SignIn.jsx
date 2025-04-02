@@ -82,26 +82,26 @@ const SignIn = () => {
       </div>
 
       {/* Form Section */}
-      <div className="card  w-full max-w-sm lg:w-[70%] shadow-2xl p-6 bg-base-300 mb-8 lg:mb-0">
+      <div className="card  w-full max-w-sm lg:w-[70%] shadow-lg p-6 bg-base-200 mb-8 lg:mb-0 mt-0 lg:mt-24">
         <h1 className="text-center text-3xl font-bold mb-6">Sign in now!</h1>
         <div>
           <h1 className="text-base">Demo Login for Testing: </h1>
-          <div className="flex gap-1 my-1">
+          <div className="grid grid-cols-3 gap-1 my-2">
             <button
               onClick={() => handleTestLogin("admin")}
-              className="btn btn-xs shadow-sm w-[70px]"
+              className="btn bg-[#DC2626] text-white"
             >
               Admin
             </button>
             <button
               onClick={() => handleTestLogin("deliveryman")}
-              className="btn btn-xs shadow-sm w-[72px]"
+              className="btn bg-[#16A34A] text-white"
             >
               Deliveryman
             </button>
             <button
               onClick={() => handleTestLogin("user")}
-              className="btn btn-xs shadow-sm w-[70px]"
+              className="btn bg-[#2563EB] text-white"
             >
               User
             </button>
@@ -161,13 +161,13 @@ const SignIn = () => {
             {/* USED CAPTCHA: npm install react-simple-captcha */}
             <button
               onClick={handleValidateCaptcha}
-              className="btn shadow-sm btn-xs mt-2 w-full"
+              className="btn shadow-sm btn-xs mt-2 bg-[#8ce28aad]"
             >
               Validate
             </button>
           </div>
           <div className="form-control mt-6">
-            <button disabled={disabled} className="btn btn-primary w-full">
+            <button disabled={disabled} className="btn bg-[#8c87d7] border-0 text-white border-b-4 border-[#0076b6af] w-full">
               Sign in <GoSignIn />
             </button>
           </div>

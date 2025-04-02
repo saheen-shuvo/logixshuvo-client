@@ -8,7 +8,6 @@ const useUserRole = () => {
     const { user } = useAuth();
     const [userRole, setUserRole] = useState(null);
     const email = user?.email;
-    console.log(email);
   
     useEffect(() => {
       if (email) {

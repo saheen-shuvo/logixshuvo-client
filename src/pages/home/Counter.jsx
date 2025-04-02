@@ -25,7 +25,6 @@ const Counter = () => {
     axiosPublic
       .get("/users/count")
       .then((res) => {
-        console.log(res.data);
         setUserCount(res.data.totalUsers);
       })
       .catch((error) => console.error("Error fetching user count:", error));
