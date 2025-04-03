@@ -38,16 +38,18 @@ const MyReviews = () => {
       </div>
     );
 
-    if (reviews.length === 0)
-        return (
-          <div className="flex justify-center items-center mt-28">
-            <p>No reviews found.</p>
-          </div>
-        );
+  if (reviews.length === 0)
+    return (
+      <div className="flex justify-center items-center mt-28">
+        <p>No reviews found.</p>
+      </div>
+    );
 
   return (
     <div>
-      <h2 className="text-3xl font-bold my-4 text-center mb-8">MY REVIEWS</h2>
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
+        MY DELIVERY LIST
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {reviews.map((review) => {
           const formattedDate = new Date(review.reviewDate).toLocaleDateString(
@@ -59,18 +61,21 @@ const MyReviews = () => {
             }
           );
           return (
-            <div className="card bg-base-100 shadow-xl" key={review._id}>
+            <div className="card bg-slate-200 shadow-lg" key={review._id}>
               <figure className="px-10 pt-10">
                 <img
                   src={review.userImage}
                   alt={review.userName}
-                  className="rounded-full w-36"
+                  className="rounded-full w-36 h-36 object-cover"
                 />
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title">{review.userName}</h2>
                 <p>{formattedDate}</p>
-                <p className="flex justify-center items-center gap-1">{review.rating}<FaStarHalfAlt /></p>
+                <p className="flex justify-center items-center gap-1">
+                  {review.rating}
+                  <FaStarHalfAlt />
+                </p>
                 <p>{review.feedback}</p>
               </div>
             </div>

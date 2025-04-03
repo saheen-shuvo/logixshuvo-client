@@ -9,7 +9,14 @@ const BookParcel = () => {
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue, watch, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
   const parcelWeight = watch("weight");
 
   useEffect(() => {
@@ -29,14 +36,14 @@ const BookParcel = () => {
       bookingDate: bookingDate.toISOString(),
       approximateDeliveryDate: approximateDeliveryDate.toISOString(),
       deliveryManId: null,
-      deliveryStatus: "pending"
+      deliveryStatus: "pending",
     };
 
     const bookedParcels = await axiosPublic.post("/bookedParcels", parcelData);
     console.log(bookedParcels.data);
     if (bookedParcels.data.insertedId) {
       reset();
-      navigate('/dashboard/myparcels');
+      navigate("/dashboard/myparcels");
       Swal.fire({
         position: "center",
         title: `Your Parcel Booked Successfully!`,
@@ -45,7 +52,7 @@ const BookParcel = () => {
         timer: 1500,
       });
     }
-  }
+  };
 
   useEffect(() => {
     if (parcelWeight) {
@@ -60,11 +67,18 @@ const BookParcel = () => {
     }
   }, [parcelWeight, setValue]);
 
+  // Get the minimum valid date (3 days ahead)
+  const getMinDate = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 3); // Add 3 days
+    return today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+  };
+
   return (
     <div>
-      <div>
-        <h1 className="text-2xl font-bold text-center my-4">BOOK A PARCEL</h1>
-      </div>
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
+        BOOK A PARCEL
+      </h2>
       {/* FORM */}
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -104,6 +118,7 @@ const BookParcel = () => {
               </div>
               <input
                 type="number"
+                required
                 placeholder="Phone"
                 {...register("phone")}
                 className="input input-bordered w-full "
@@ -118,9 +133,18 @@ const BookParcel = () => {
               <input
                 type="number"
                 placeholder="Weight"
-                {...register("weight")}
+                {...register("weight", {
+                  required: "Weight is required",
+                  min: 1,
+                  max: 10,
+                })}
                 className="input input-bordered w-full "
               />
+              {errors.weight && (
+                <p className="text-red-700 text-sm">
+                  Weight must be between 1-10 kg
+                </p>
+              )}
             </label>
 
             {/* TYPE */}
@@ -131,6 +155,7 @@ const BookParcel = () => {
               <input
                 type="text"
                 placeholder="Type"
+                required
                 {...register("type")}
                 className="input input-bordered w-full "
               />
@@ -144,6 +169,7 @@ const BookParcel = () => {
               <input
                 type="text"
                 placeholder="Name"
+                required
                 {...register("receiversName")}
                 className="input input-bordered w-full "
               />
@@ -157,6 +183,7 @@ const BookParcel = () => {
               <input
                 type="number"
                 placeholder="Phone"
+                required
                 {...register("receiversPhone")}
                 className="input input-bordered w-full "
               />
@@ -170,12 +197,13 @@ const BookParcel = () => {
               <input
                 type="text"
                 placeholder="Address"
+                required
                 {...register("deliveryAddress")}
                 className="input input-bordered w-full "
               />
             </label>
 
-            {/* DELIVERY DATE */}
+            {/* REQUESTED DELIVERY DATE */}
             <label className="form-control w-full  flex flex-col">
               <div className="label">
                 <span className="label-text"> Request Delivery Date*</span>
@@ -183,9 +211,18 @@ const BookParcel = () => {
               <input
                 type="date"
                 placeholder="Date"
-                {...register("deliveryDate")}
+                {...register("deliveryDate", {
+                  required: "Delivery date is required",
+                  validate: (value) =>
+                    value >= getMinDate() ||
+                    "Date must be at least 3 days ahead",
+                })}
                 className="input input-bordered w-full "
+                min={getMinDate()}
               />
+              {errors.deliveryDate && (
+                <p className="text-red-500">{errors.deliveryDate.message}</p>
+              )}
             </label>
 
             {/* DELIVERY LATITUDE */}
@@ -194,11 +231,22 @@ const BookParcel = () => {
                 <span className="label-text"> Delivery Address Latitude*</span>
               </div>
               <input
-                type="text"
+                type="number"
                 placeholder="Latitude"
-                {...register("latitude")}
+                {...register("latitude", {
+                  required: "Latitude is required",
+                  pattern: {
+                    value: /^-?([0-8]?[0-9](\.\d+)?|90(\.0+)?)$/,
+                    message: "Invalid latitude (-90 to 90)",
+                  },
+                })}
                 className="input input-bordered w-full "
               />
+              {errors.latitude && (
+                <span className="text-red-700 text-sm">
+                  {errors.latitude.message}
+                </span>
+              )}
             </label>
 
             {/* DELIVERY LONGITUDE */}
@@ -207,11 +255,22 @@ const BookParcel = () => {
                 <span className="label-text"> Delivery Address Longitude*</span>
               </div>
               <input
-                type="text"
+                type="number"
                 placeholder="Longitude"
-                {...register("longitude")}
+                {...register("longitude", {
+                  required: "Longitude is required",
+                  pattern: {
+                    value: /^-?(1?[0-7]?[0-9](\.\d+)?|180(\.0+)?)$/,
+                    message: "Invalid longitude (-180 to 180)",
+                  },
+                })}
                 className="input input-bordered w-full "
               />
+              {errors.longitude && (
+                <span className="text-red-700 text-sm">
+                  {errors.longitude.message}
+                </span>
+              )}
             </label>
 
             {/* DELIVERY CHARGE */}
@@ -230,8 +289,11 @@ const BookParcel = () => {
           </div>
 
           {/* SUBMIT BTN */}
-          <div className="flex justify-center my-3">
-            <input className="btn btn-primary" type="submit" />
+          <div className="flex justify-center my-8">
+            <input
+              className="btn bg-[#8c87d7]   border-b-4 border-[#0076b6af] border-0 text-white px-8"
+              type="submit"
+            />
           </div>
         </form>
       </div>

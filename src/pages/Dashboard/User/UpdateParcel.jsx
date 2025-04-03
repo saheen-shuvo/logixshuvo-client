@@ -5,14 +5,15 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 const UpdateParcel = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const axiosPublic = useAxiosPublic();
-  const {register, handleSubmit, setValue} = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosPublic.get(`/parcels/${id}`)
+    axiosPublic
+      .get(`/parcels/${id}`)
       .then((response) => {
         const parcel = response.data;
         Object.keys(parcel).forEach((key) => setValue(key, parcel[key]));
@@ -24,15 +25,15 @@ const UpdateParcel = () => {
       });
   }, [id, setValue, axiosPublic]);
 
-
   const onSubmit = (data) => {
     const { _id, ...dataWithoutId } = data;
     console.log("Updating parcel with ID:", _id);
-    axiosPublic.put(`/parcels/${id}`, dataWithoutId)
+    axiosPublic
+      .put(`/parcels/${id}`, dataWithoutId)
       .then((response) => {
         if (response.data.success) {
           Swal.fire("Success!", "Parcel updated successfully", "success");
-          navigate('/dashboard/myparcels')
+          navigate("/dashboard/myparcels");
         } else {
           Swal.fire("Error!", "Failed to update parcel", "error");
         }
@@ -43,7 +44,6 @@ const UpdateParcel = () => {
       });
   };
 
-
   if (loading)
     return (
       <div className="flex items-center justify-center h-screen">
@@ -53,9 +53,9 @@ const UpdateParcel = () => {
 
   return (
     <div>
-      <div>
-        <h2 className="text-3xl font-bold my-4 text-center">UPDATE PARCEL</h2>
-      </div>
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
+        UPDATE THE PARCEL
+      </h2>
       {/* FORM */}
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -222,7 +222,10 @@ const UpdateParcel = () => {
 
           {/* SUBMIT BTN */}
           <div className="flex justify-center my-3">
-            <input className="btn btn-primary" type="submit" />
+            <input
+              className="btn bg-[#8c87d7]   border-b-4 border-[#0076b6af] border-0 text-white px-8"
+              type="submit"
+            />
           </div>
         </form>
       </div>

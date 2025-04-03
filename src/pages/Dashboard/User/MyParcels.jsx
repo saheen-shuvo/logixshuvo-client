@@ -99,8 +99,10 @@ const MyParcels = () => {
     );
 
   return (
-    <div className="p-4">
-      <h2 className="text-3xl font-bold my-4 text-center">MY PARCELS</h2>
+    <div>
+      <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
+        MY BOOKED PARCELS
+      </h2>
       {parcels.length === 0 ? (
         <p className="text-center">No parcels found.</p>
       ) : (

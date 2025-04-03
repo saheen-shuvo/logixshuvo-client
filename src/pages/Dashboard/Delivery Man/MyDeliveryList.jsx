@@ -27,7 +27,6 @@ const MyDeliveryList = () => {
     },
     enabled: !!user?.email,
   });
-  console.log(deliveries);
 
   const handleDeliver = async (id) => {
     try {
