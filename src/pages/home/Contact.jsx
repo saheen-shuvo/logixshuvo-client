@@ -1,6 +1,38 @@
+/* eslint-disable react/no-unescaped-entities */
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2";
+
 const Contact = () => {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        `${import.meta.env.VITE_EMAIL_SERVICE_ID}`,
+        `${import.meta.env.VITE_EMAIL_TEMPLATE_ID}`,
+        form.current,
+        {
+          publicKey: `${import.meta.env.VITE_EMAIL_PUBLIC_KEY}`,
+        }
+      )
+      .then(
+        () => {
+          Swal.fire("Success!", "Email Sent successfully", "success");
+        },
+        (error) => {
+          Swal.fire("Failed!", "Could not send email", "warning", error.text);
+        }
+      );
+  };
+
   return (
-    <section id="contact" className="px-4 mt-8 lg:mt-16 max-w-screen-xl mx-auto">
+    <section
+      id="contact"
+      className="px-4 mt-8 lg:mt-16 max-w-screen-xl mx-auto"
+    >
       <h2 className="text-center text-3xl lg:text-5xl font-bold lg:py-2">
         CONTACT & SUPPORT
       </h2>
@@ -8,50 +40,49 @@ const Contact = () => {
         Feel free to ask any queries or support about our services or platform.
       </p>
 
-      <div className="max-w-screen-md mx-auto text-center">
-        {/* Email Address */}
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold">Business Email</h3>
-          <p className="text-lg">
-            <a
-              href="mailto:your-email@example.com"
-              className="text-blue-500 hover:underline"
-            >
-              saheenshuvo182@gmail.com
-            </a>
-          </p>
-        </div>
-
-        {/* Phone Number (optional) */}
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold">Hotline Number</h3>
-          <p className="text-lg">
-            <a href="tel:+1234567890" className="text-blue-500 hover:underline">
-              +8801751967704
-            </a>
-          </p>
-        </div>
-
-        {/* Optional: Contact Form */}
-        <div className="">
-          <h3 className="text-xl font-semibold">Ask Queries</h3>
+      <div className="max-w-screen-xl mx-auto text-center mt-8">
+        <div className="flex justify-center items-center ">
           <form
-            action="mailto:saheenshuvo182@gmail.com"
-            method="POST"
-            encType="text/plain"
+            ref={form}
+            onSubmit={sendEmail}
+            className="bg-white shadow-lg rounded-2xl p-6 w-full md:w-[50%]"
           >
+            <h2 className="text-xl font-semibold text-center mb-4 text-gray-700">
+              What's on your mind? Feel free to share!
+            </h2>
+
+            <label className="block text-gray-600 font-medium mb-1">Name</label>
+            <input
+              type="text"
+              name="user_name"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+
+            <label className="block text-gray-600 font-medium mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              name="user_email"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+
+            <label className="block text-gray-600 font-medium mt-3 mb-1">
+              Message
+            </label>
             <textarea
               name="message"
-              rows="4"
-              className="w-full p-2 my-4 border-2 border-gray-200 rounded-lg"
-              placeholder="Write your message here"
+              className="w-full p-2 border border-gray-300 rounded-lg h-28 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
             ></textarea>
-            <button
+
+            <input
               type="submit"
-              className="bg-[#8c87d7]  mt-[25px] px-12 border-0 text-white border-b-4 border-[#0076b6af] btn"
-            >
-              Send Message
-            </button>
+              value="Send"
+              className="btn bg-[#8c87d7]  px-12 border-0 border-b-4 border-[#0076b6af] w-full text-white py-2 rounded-lg hover:bg-[#0076b6af] transition cursor-pointer my-8"
+            />
           </form>
         </div>
       </div>

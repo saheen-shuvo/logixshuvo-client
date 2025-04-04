@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../context/AuthContext/AuthContext";
 import Swal from "sweetalert2";
@@ -106,159 +107,329 @@ const MyParcels = () => {
       {parcels.length === 0 ? (
         <p className="text-center">No parcels found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="border-collapse border w-full min-w-max">
-            <thead>
-              <tr className="bg-gray-200 text-sm md:text-base">
-                <th className="border p-2 whitespace-nowrap">Type</th>
-                <th className="border p-2 whitespace-nowrap">Requested Date</th>
-                <th className="border p-2 whitespace-nowrap">Approx. Date</th>
-                <th className="border p-2 whitespace-nowrap">Booking Date</th>
-                <th className="border p-2 whitespace-nowrap">
-                  Delivery Man ID
-                </th>
-                <th className="border p-2 whitespace-nowrap">Status</th>
-                <th className="border p-2 whitespace-nowrap">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {parcels.map((parcel) => (
-                <tr key={parcel._id} className="border text-xs md:text-sm">
-                  <td className="border p-2">{parcel.type}</td>
-                  <td className="border p-2">{parcel.deliveryDate}</td>
-                  <td className="border p-2">
-                    {parcel.approximateDeliveryDate?.split("T")[0]}
-                  </td>
-                  <td className="border p-2">
-                    {parcel.bookingDate?.split("T")[0]}
-                  </td>
-                  <td className="border p-2">
-                    {parcel.deliveryManId || "Not Assigned"}
-                  </td>
-                  <td className="border p-2">{parcel.deliveryStatus}</td>
-                  <td className="border p-2">
-                    <div className="flex flex-wrap gap-2">
-                      <Link to={`/dashboard/updateparcel/${parcel._id}`}>
-                        <button className="bg-blue-500 text-white px-2 py-1 rounded text-xs md:text-sm">
-                          Update
-                        </button>
-                      </Link>
-
-                      {parcel.deliveryStatus === "pending" ? (
-                        <button
-                          onClick={() => handleCancel(parcel._id)}
-                          className="bg-red-500 text-white px-2 py-1 rounded text-xs md:text-sm"
-                        >
-                          Cancel
-                        </button>
-                      ) : (
-                        <button
-                          disabled
-                          className="bg-gray-400 text-white px-2 py-1 rounded text-xs md:text-sm cursor-not-allowed opacity-50"
-                        >
-                          Cancel
-                        </button>
-                      )}
-
-                      {parcel.deliveryStatus === "delivered" ? (
-                        <button
-                          onClick={() => handleReview(parcel)}
-                          className="bg-green-500 text-white px-2 py-1 rounded text-xs md:text-sm"
-                        >
-                          Review
-                        </button>
-                      ) : (
-                        <button
-                          disabled
-                          className="bg-gray-400 text-white px-2 py-1 rounded text-xs md:text-sm cursor-not-allowed opacity-50"
-                        >
-                          Review
-                        </button>
-                      )}
-
-                      {parcel.paymentStatus === "paid" ? (
-                        <button
-                          disabled
-                          className="bg-green-500 text-white px-2 py-1 rounded text-xs md:text-sm cursor-not-allowed"
-                        >
-                          Paid
-                        </button>
-                      ) : parcel.deliveryStatus === "pending" ? (
-                        <Link to="/dashboard/payment" state={{ parcel }}>
-                          <button className="bg-yellow-500 text-white px-2 py-1 rounded text-xs md:text-sm">
-                            Pay
+        <>
+          {/* FOR LARGE SCREEN */}
+          <div className="overflow-x-auto hidden xl:block">
+            <table className="table w-full">
+              {/* head */}
+              <thead>
+                <tr className="text-xs">
+                  <th>Type</th>
+                  <th>Requested Date</th>
+                  <th>Approximate Date</th>
+                  <th>Booking Date</th>
+                  <th>DeliveryMan ID</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {parcels.map((parcel) => (
+                  <tr className="text-xs">
+                    <th className="font-semibold">{parcel.type}</th>
+                    <td className="font-semibold">{parcel.deliveryDate}</td>
+                    <td className="font-semibold">
+                      {" "}
+                      {parcel.approximateDeliveryDate?.split("T")[0]}
+                    </td>
+                    <td className="font-semibold">
+                      {" "}
+                      {parcel.bookingDate?.split("T")[0]}
+                    </td>
+                    <td className="font-semibold">
+                      {" "}
+                      {parcel.deliveryManId || "Not Assigned"}
+                    </td>
+                    <td className="font-semibold">{parcel.deliveryStatus}</td>
+                    <td className="font-semibold">
+                      {" "}
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link to={`/dashboard/updateparcel/${parcel._id}`}>
+                          <button className="bg-blue-500 btn btn-xs text-white w-full px-2 py-1 rounded text-xs md:text-sm">
+                            Update
                           </button>
                         </Link>
-                      ) : (
-                        <button
-                          disabled
-                          className="bg-gray-400 text-white px-2 py-1 rounded text-xs md:text-sm cursor-not-allowed opacity-50"
-                        >
-                          Pay
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {selectedParcel && (
-            <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
-              <div className="bg-blue-200  p-5 rounded-lg w-96">
-                <h3 className="text-xl font-bold mb-4">Give Review</h3>
-                <p>
-                  <strong>Name:</strong> {user.displayName}
-                </p>
-                <p>
-                  <strong>Image:</strong>{" "}
-                  <img
-                    src={user.photoURL}
-                    alt="User"
-                    className="w-10 h-10 rounded-full inline-block ml-2"
-                  />
-                </p>
-                <p>
-                  <strong>Delivery Man ID:</strong>{" "}
-                  {selectedParcel.deliveryManId}
-                </p>
-                <div className="mt-2">
-                  <label>Rating:</label>
-                  <input
-                    type="number"
-                    value={rating}
-                    onChange={(e) => setRating(e.target.value)}
-                    min="1"
-                    max="5"
-                    className="border p-2 w-full"
-                  />
-                </div>
-                <div className="mt-2">
-                  <label>Feedback:</label>
-                  <textarea
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    className="border p-2 w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-end gap-2">
-                  <button
-                    onClick={() => setSelectedParcel(null)}
-                    className="bg-gray-500 text-white px-3 py-1 btn rounded"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={submitReview}
-                    className="bg-blue-500 text-white px-3 py-1 rounded btn"
-                  >
-                    Submit
-                  </button>
+
+                        {parcel.deliveryStatus === "pending" ? (
+                          <button
+                            onClick={() => handleCancel(parcel._id)}
+                            className="bg-red-500 btn btn-xs text-white px-2 py-1 rounded text-xs md:text-sm"
+                          >
+                            Cancel
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-400 btn btn-xs  text-white w-full rounded text-xs md:text-sm cursor-not-allowed opacity-50"
+                          >
+                            Cancel
+                          </button>
+                        )}
+
+                        {parcel.deliveryStatus === "delivered" ? (
+                          <button
+                            onClick={() => handleReview(parcel)}
+                            className="bg-green-500 btn btn-xs text-white w-full rounded text-xs md:text-sm"
+                          >
+                            Review
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-400 btn btn-xs text-white w-full rounded text-xs md:text-sm cursor-not-allowed opacity-50"
+                          >
+                            Review
+                          </button>
+                        )}
+
+                        {parcel.paymentStatus === "paid" ? (
+                          <button
+                            disabled
+                            className="bg-green-500 btn btn-xs text-white w-full rounded text-xs md:text-sm cursor-not-allowed"
+                          >
+                            Paid
+                          </button>
+                        ) : parcel.deliveryStatus === "pending" ? (
+                          <Link to="/dashboard/payment" state={{ parcel }}>
+                            <button className="bg-yellow-500 btn btn-xs text-white w-full rounded text-xs md:text-sm">
+                              Pay
+                            </button>
+                          </Link>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-400 text-white w-full rounded text-xs md:text-sm cursor-not-allowed opacity-50 btn btn-xs"
+                          >
+                            Pay
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {selectedParcel && (
+              <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+                <div className="bg-slate-100  p-5 rounded-lg w-96 shadow-lg">
+                  <h3 className="text-xl font-bold mb-4">Give Review</h3>
+                  <p>
+                    <strong>Name:</strong> {user.displayName}
+                  </p>
+                  <p>
+                    <strong>Image:</strong>{" "}
+                    <img
+                      src={user.photoURL}
+                      alt="User"
+                      className="w-10 h-10 object-cover rounded-full inline-block ml-2"
+                    />
+                  </p>
+                  <p>
+                    <strong>Delivery Man ID:</strong>{" "}
+                    {selectedParcel.deliveryManId}
+                  </p>
+                  <div className="mt-2">
+                    <label>Rating:</label>
+                    <input
+                      type="number"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                      min="1"
+                      max="5"
+                      className="border p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label>Feedback:</label>
+                    <textarea
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                      className="border p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-end gap-2">
+                    <button
+                      onClick={() => setSelectedParcel(null)}
+                      className="bg-gray-500 text-white px-3 py-1 btn rounded"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={submitReview}
+                      className="bg-blue-500 text-white px-3 py-1 rounded btn"
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+
+          {/* FOR SMALL SCREEN */}
+          <div className="overflow-x-auto block xl:hidden">
+            {parcels.map((parcel) => (
+              <table className="table table-zebra mb-4 border-2 border-gray-200 shadow-sm">
+                <tbody>
+                  <tr>
+                    <th>Type</th>
+                    <td className="font-semibold">{parcel.type}</td>
+                  </tr>
+                  <tr>
+                    <th>Requested Date</th>
+                    <td className="font-semibold">{parcel.deliveryDate}</td>
+                  </tr>
+                  <tr>
+                    <th>Approximate Date</th>
+                    <td className="font-semibold">
+                      {" "}
+                      {parcel.approximateDeliveryDate?.split("T")[0]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Booking Date</th>
+                    <td className="font-semibold">
+                      {" "}
+                      {parcel.bookingDate?.split("T")[0]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>DeliveryMan ID</th>
+                    <td className="font-semibold">
+                      {parcel.deliveryManId || "Not Assigned"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Status</th>
+                    <td className="font-semibold">{parcel.deliveryStatus}</td>
+                  </tr>
+                  <tr>
+                    <th>Action</th>
+                    <td className="font-semibold">
+                      {" "}
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link to={`/dashboard/updateparcel/${parcel._id}`}>
+                          <button className="bg-blue-500 btn btn-xs w-full text-white rounded text-xs md:text-sm">
+                            Update
+                          </button>
+                        </Link>
+
+                        {parcel.deliveryStatus === "pending" ? (
+                          <button
+                            onClick={() => handleCancel(parcel._id)}
+                            className="bg-red-500 btn btn-xs text-white w-full rounded text-xs md:text-sm"
+                          >
+                            Cancel
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-400 btn btn-xs text-white w-full rounded text-xs md:text-sm cursor-not-allowed opacity-50"
+                          >
+                            Cancel
+                          </button>
+                        )}
+
+                        {parcel.deliveryStatus === "delivered" ? (
+                          <button
+                            onClick={() => handleReview(parcel)}
+                            className="bg-green-500 btn btn-xs text-white w-full rounded text-xs md:text-sm"
+                          >
+                            Review
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-400 btn btn-xs text-white w-full rounded text-xs md:text-sm cursor-not-allowed opacity-50"
+                          >
+                            Review
+                          </button>
+                        )}
+
+                        {parcel.paymentStatus === "paid" ? (
+                          <button
+                            disabled
+                            className="bg-green-500 btn btn-xs text-white w-full rounded text-xs md:text-sm cursor-not-allowed"
+                          >
+                            Paid
+                          </button>
+                        ) : parcel.deliveryStatus === "pending" ? (
+                          <Link to="/dashboard/payment" state={{ parcel }}>
+                            <button className="bg-yellow-500 btn btn-xs text-white w-full rounded text-xs md:text-sm">
+                              Pay
+                            </button>
+                          </Link>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-400 text-white w-full rounded text-xs md:text-sm cursor-not-allowed opacity-50 btn btn-xs"
+                          >
+                            Pay
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            ))}
+            {selectedParcel && (
+              <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+                <div className="bg-slate-100  p-5 rounded-lg w-96 shadow-lg">
+                  <h3 className="text-xl font-bold mb-4">Give Review</h3>
+                  <p>
+                    <strong>Name:</strong> {user.displayName}
+                  </p>
+                  <p>
+                    <strong>Image:</strong>{" "}
+                    <img
+                      src={user.photoURL}
+                      alt="User"
+                      className="w-10 h-10 object-cover rounded-full inline-block ml-2"
+                    />
+                  </p>
+                  <p>
+                    <strong>Delivery Man ID:</strong>{" "}
+                    {selectedParcel.deliveryManId}
+                  </p>
+                  <div className="mt-2">
+                    <label>Rating:</label>
+                    <input
+                      type="number"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                      min="1"
+                      max="5"
+                      className="border p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label>Feedback:</label>
+                    <textarea
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                      className="border p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-end gap-2">
+                    <button
+                      onClick={() => setSelectedParcel(null)}
+                      className="bg-gray-500 text-white px-3 py-1 btn rounded"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={submitReview}
+                      className="bg-blue-500 text-white px-3 py-1 rounded btn"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
