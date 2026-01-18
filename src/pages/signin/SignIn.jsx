@@ -117,6 +117,7 @@ const SignIn = () => {
               name="email"
               placeholder="email"
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="input input-bordered"
               required
             />
@@ -130,6 +131,7 @@ const SignIn = () => {
               name="password"
               placeholder="password"
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="input input-bordered"
               required
             />

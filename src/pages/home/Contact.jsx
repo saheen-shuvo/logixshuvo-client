@@ -9,13 +9,21 @@ const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
+    if (!form.current) {
+      console.error("Form reference is null.");
+      return;
+    }
+
+    const formData = new FormData(form.current);
+    console.log("Form Data:", Object.fromEntries(formData));
+
     emailjs
       .sendForm(
-        `${import.meta.env.VITE_EMAIL_SERVICE_ID}`,
-        `${import.meta.env.VITE_EMAIL_TEMPLATE_ID}`,
+        import.meta.env.VITE_EMAIL_SERVICE_ID,
+        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
         form.current,
         {
-          publicKey: `${import.meta.env.VITE_EMAIL_PUBLIC_KEY}`,
+          publicKey: import.meta.env.VITE_EMAIL_PUBLIC_KEY,
         }
       )
       .then(
@@ -23,7 +31,11 @@ const Contact = () => {
           Swal.fire("Success!", "Email Sent successfully", "success");
         },
         (error) => {
-          Swal.fire("Failed!", "Could not send email", "warning", error.text);
+          Swal.fire(
+            "Failed!",
+            `Could not send email: ${error.text}`,
+            "warning"
+          );
         }
       );
   };
