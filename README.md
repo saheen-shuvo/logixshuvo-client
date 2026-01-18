@@ -20,12 +20,12 @@ It offers **role-based access** for **Admin**, **Deliveryman**, and **Customer**
 
 ### 🏠 Home Page
 <p align="center">
-  <img src="/src/assets//image//readmeimage//home.png" width="800" alt="Home Page" />
+  <img src="/src/assets//image//readmeimage//home.jpg" width="800" alt="Home Page" />
 </p>
 
 ### 🔐 Login & Registration
 <p align="center">
-  <img src="/src/assets//image//readmeimage/signIn.png" width="800" alt="Login Page" />
+  <img src="/src/assets//image//readmeimage/signIn.jpg" width="800" alt="Login Page" />
 </p>
 
 ### 📦 Parcel Booking
@@ -35,7 +35,7 @@ It offers **role-based access** for **Admin**, **Deliveryman**, and **Customer**
 
 ### 📊 Admin Dashboard
 <p align="center">
-  <img src="/src/assets//image//readmeimage//adminDashboard.png" width="800" alt="Admin Dashboard" />
+  <img src="/src/assets//image//readmeimage//adminDashboard.jpg" width="800" alt="Admin Dashboard" />
 </p>
 
 ### 💳 Payment & Invoice
