@@ -9,10 +9,13 @@ import SocialLogin from "../../shared/SocialLogin";
 import authImg from "../../assets/image/authentication.gif";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { GoSignIn } from "react-icons/go";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const axiosPublic = useAxiosPublic();
   const [showPass, setShowPass] = useState(false);
+  const [loadingLocal, setLoadingLocal] = useState(false);
+
   const navigate = useNavigate();
   const { createUser, setLoading, setUser } = useContext(AuthContext);
 
@@ -50,13 +53,14 @@ const Register = () => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
     if (!passwordRegex.test(password)) {
       toast.warn(
-        "Password must include at least one uppercase and one lowercase letter."
+        "Password must include at least one uppercase and one lowercase letter.",
       );
       return;
     }
 
     try {
       setLoading(true);
+      setLoadingLocal(true);
 
       const result = await createUser(email, password);
       const user = result.user;
@@ -71,46 +75,55 @@ const Register = () => {
       toast.success("Account created successfully!");
 
       const userInfo = { name, email, role, phone };
-      console.log(userInfo);
 
-      axiosPublic.post("/users", userInfo).then((res) => {
-        if (res.data.insertedId) {
-          form.reset();
-          navigate("/");
-        }
-      });
+      const res = await axiosPublic.post("/users", userInfo);
+      if (res.data?.insertedId) {
+        form.reset();
+        navigate("/");
+      }
     } catch (error) {
       console.error("Error creating account:", error.message);
       toast.error(error.message);
     } finally {
       setLoading(false);
+      setLoadingLocal(false);
     }
   };
 
   const togglePasswordVisibility = () => setShowPass(!showPass);
 
   return (
-    <div className="auth-bg hero min-h-screen flex flex-col-reverse lg:flex-row lg:gap-28 items-center justify-center p-4">
-      {/* Form Section */}
-      <div className="card w-full max-w-sm lg:w-[70%] shadow-lg p-6 mt-8 lg:mt-20 bg-base-200">
-        <h1 className="text-center text-2xl font-bold">Register Here!</h1>
-        <form onSubmit={handleRegister} className="card-body space-y-4">
+    <div className="auth-bg hero min-h-screen flex flex-col-reverse lg:flex-row items-center justify-center p-4 lg:gap-28">
+      {/* FORM SECTION */}
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
+        className="card w-full max-w-sm lg:w-[70%] shadow p-6 bg-white/10 mb-8 lg:mb-0 mt-8 lg:mt-24 rounded-2xl"
+      >
+        <h1 className="text-center text-3xl font-bold mb-4">Register Here!</h1>
+
+        <form onSubmit={handleRegister} className="space-y-4">
+          {/* Role */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Select User Role</span>
+              <span className="label-text font-semibold">Select User Role</span>
             </label>
             <select
               name="role"
-              className="select select-bordered w-full max-w-xs"
-              defaultValue="User"
+              className="select select-bordered w-full"
+              defaultValue="user"
             >
               <option value="user">User</option>
               <option value="deliveryman">Delivery Man</option>
             </select>
           </div>
+
+          {/* Name */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">User Name</span>
+              <span className="label-text font-semibold">User Name</span>
             </label>
             <input
               type="text"
@@ -120,9 +133,11 @@ const Register = () => {
               required
             />
           </div>
+
+          {/* Phone */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Phone Number</span>
+              <span className="label-text font-semibold">Phone Number</span>
             </label>
             <input
               type="number"
@@ -132,9 +147,11 @@ const Register = () => {
               required
             />
           </div>
+
+          {/* Email */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text font-semibold">Email</span>
             </label>
             <input
               type="email"
@@ -144,18 +161,22 @@ const Register = () => {
               required
             />
           </div>
+
+          {/* Password */}
           <div className="form-control relative">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text font-semibold">Password</span>
             </label>
+
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="btn btn-xs absolute bottom-[9px] right-2"
+              className="btn btn-xs absolute right-2 bottom-[9px] mr-4"
               aria-label="Toggle Password Visibility"
             >
               {showPass ? <FaEyeSlash /> : <FaEye />}
             </button>
+
             <input
               type={showPass ? "text" : "password"}
               name="password"
@@ -164,9 +185,11 @@ const Register = () => {
               required
             />
           </div>
+
+          {/* Photo */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Photo URL</span>
+              <span className="label-text font-semibold">Photo URL</span>
             </label>
             <input
               type="text"
@@ -176,36 +199,62 @@ const Register = () => {
               required
             />
           </div>
+
+          {/* Terms */}
           <div className="form-control">
-            <label className="label cursor-pointer">
+            <label className="label cursor-pointer justify-start gap-2">
               <input type="checkbox" name="terms" className="checkbox" />
-              <span className="label-text ml-1">
+              <span className="label-text">
                 Accept our terms and conditions
               </span>
             </label>
           </div>
+
+          {/* Submit */}
           <div className="form-control mt-2">
-            <button className="btn bg-[#8c87d7] border-0 text-white border-b-4 border-[#0076b6af] w-full">Sign up <GoSignIn /></button>
+            <button
+              disabled={loadingLocal}
+              className="btn bg-[#8c87d7] border-0 text-white border-b-4 border-[#0076b6af] w-full hover:brightness-95 disabled:opacity-60"
+            >
+              {loadingLocal ? (
+                "Creating..."
+              ) : (
+                <>
+                  Sign up <GoSignIn />
+                </>
+              )}
+            </button>
           </div>
+
           <div className="divider my-0">OR</div>
-          <div className="flex justify-center">
+
+          <div className="flex justify-center mt-2">
             <SocialLogin />
           </div>
         </form>
+
         <p className="text-xs text-center mt-4">
           Already have an account?{" "}
-          <Link className="underline" to="/signin">
+          <Link className="text-[#0276b6] font-semibold underline" to="/signin">
             Sign in.
           </Link>
         </p>
-      </div>
-      <div className="w-full lg:w-[30%] flex justify-center mt-16 lg:mt-0">
+      </motion.div>
+
+      {/* SIDE IMAGE SECTION (match SignIn) */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="w-full lg:w-[30%] flex justify-center mt-16 lg:mt-0 mb-6 lg:mb-0"
+      >
         <img
           className="rounded-full border-8 border-dotted"
           src={authImg}
-          alt=""
+          alt="Authentication"
         />
-      </div>
+      </motion.div>
     </div>
   );
 };

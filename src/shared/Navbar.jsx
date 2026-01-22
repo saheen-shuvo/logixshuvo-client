@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import logo from "../assets/image/logo.svg";
 // import { RiNotification3Line } from "react-icons/ri";
 import AuthContext from "../context/AuthContext/AuthContext";
@@ -29,18 +30,40 @@ const Navbar = () => {
     staticDashboardRoute = "/dashboard/bookparcel";
   }
 
-  const links = (
-    <>
+const links = (
+  <>
+    <li className="font-semibold">
+      <NavLink to="/">Home</NavLink>
+    </li>
+
+    <li className="font-semibold">
+      <HashLink smooth to="/#features">Features</HashLink>
+    </li>
+
+    <li className="font-semibold">
+      <HashLink smooth to="/#top-deliveryman">Top Deliveryman</HashLink>
+    </li>
+
+    <li className="font-semibold">
+      <HashLink smooth to="/#partners">Partners</HashLink>
+    </li>
+
+    <li className="font-semibold">
+      <HashLink smooth to="/#faqs">FAQs</HashLink>
+    </li>
+
+    <li className="font-semibold">
+      <HashLink smooth to="/#contact-us">Contact Us</HashLink>
+    </li>
+
+    {/* {user && (
       <li className="font-semibold">
-        <NavLink to="/">Home</NavLink>
+        <NavLink to={staticDashboardRoute}>Dashboard</NavLink>
       </li>
-      {user && (
-        <li className="font-semibold">
-          <NavLink to={staticDashboardRoute}>Dashboard</NavLink>
-        </li>
-      )}
-    </>
-  );
+    )} */}
+  </>
+);
+
 
   const handleSignOut = () => {
     signOutUser()
@@ -61,7 +84,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed z-10 navbar  bg-[#0076b6af]  flex justify-center">
+    <div className="fixed z-10 navbar  bg-[#0076b6]  flex justify-center">
       <div className="navbar z-10 fixed max-w-screen-xl">
         <div className="navbar-start">
           <div className="dropdown">
