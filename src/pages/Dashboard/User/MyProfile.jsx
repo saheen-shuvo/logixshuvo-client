@@ -55,7 +55,7 @@ const MyProfile = () => {
   return (
     <div>
       <h2 className="text-xl lg:text-3xl font-bold my-0 lg:my-4 text-center pb-4">
-        ALL REGISTERED USERS
+        MY PROFILE
       </h2>
       <div className="max-w-3xl mx-auto bg-slate-50 p-6 rounded-xl shadow-md mt-0 lg:mt-8">
         {/* Profile Image */}

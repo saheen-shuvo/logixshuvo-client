@@ -12,7 +12,7 @@ const Banner = () => {
   const banners = [banner2, banner1, banner3];
 
   return (
-    <div className="relative bg-black">
+    <div className="relative bg-black pt-16 lg:pt-0">
       <Swiper
         modules={[Autoplay, Pagination]}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
@@ -26,7 +26,7 @@ const Banner = () => {
             <div className="">
               <img
                 src={img}
-                className="h-screen w-full object-cover object-center"
+                className="h-[80%] lg:h-screen w-full object-cover object-center"
                 alt=""
               />
             </div>

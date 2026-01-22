@@ -11,24 +11,22 @@ const FreeShipping = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  const handleClaimNow = () => {
-    if (!user) {
-      toast.warn("Please log in first!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "light",
-        transition: Bounce,
-      });
-      navigate("/signin");
-      return;
-    }
+const handleClaimNow = () => {
+  if (!user) {
+    toast.warn("Please log in first!", {
+      position: "top-right",
+      autoClose: 2000,
+      transition: Bounce,
+    });
 
-    navigate("/dashboard/bookparcel");
-  };
+    navigate("/signin", { replace: true });
+    window.scrollTo(0, 0); // ✅ instant jump, not scroll
+    return;
+  }
+
+  navigate("/dashboard/bookparcel");
+};
+
 
   return (
     <div className="mt-12 md:mt-20 max-w-7xl mx-auto px-4 md:px-0">
